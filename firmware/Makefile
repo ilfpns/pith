@@ -1,18 +1,49 @@
-CC     = g++
-CFLAGS = -g -Wall
+TARGET  = pith
 
-# 중간 생성 *.o 목록
-OBJS   = src/main.o
-TARGET = pith.out
+CC      = arm-none-eabi-gcc
+OBJCOPY = arm-none-eabi-objcopy
+SIZE    = arm-none-eabi-size
 
-all: $(TARGET)
+BUILD   = build
+
+# --- Cortex-M3 / STM32F103xB ---
+MCU_FLAGS = -mcpu=cortex-m3 -mthumb -mfloat-abi=soft
+
+CFLAGS  = $(MCU_FLAGS) -DSTM32F103xB -Iinc -g -O0 -Wall \
+          -ffunction-sections -fdata-sections -fno-common -std=gnu11
+
+ASFLAGS = $(MCU_FLAGS) -g -x assembler-with-cpp
+
+LDFLAGS = $(MCU_FLAGS) -Tlinker/stm32f103xb.ld -nostartfiles \
+          -specs=nano.specs -specs=nosys.specs \
+          -Wl,--gc-sections -Wl,-Map=$(BUILD)/$(TARGET).map
+
+SRCS_C  = src/main.c src/syscalls.c startup/system_stm32f1xx.c
+SRCS_S  = startup/startup_stm32f103xb.s
+
+OBJS    = $(SRCS_C:%.c=$(BUILD)/%.o) $(SRCS_S:%.s=$(BUILD)/%.o)
+
+.PHONY: all clean flash
+
+all: $(BUILD)/$(TARGET).bin
+
+$(BUILD)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD)/%.o: %.s
+	@mkdir -p $(dir $@)
+	$(CC) $(ASFLAGS) -c $< -o $@
+
+$(BUILD)/$(TARGET).elf: $(OBJS) linker/stm32f103xb.ld
+	$(CC) $(LDFLAGS) -o $@ $(OBJS)
+	$(SIZE) $@
+
+$(BUILD)/$(TARGET).bin: $(BUILD)/$(TARGET).elf
+	$(OBJCOPY) -O binary $< $@
+
+flash: $(BUILD)/$(TARGET).bin
+	st-flash write $(BUILD)/$(TARGET).bin 0x8000000
 
 clean:
-	rm -f $(OBJS)
-	rm -f $(TARGET)
-
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
-
-src/main.o: src/main.cpp
-	$(CC) $(CFLAGS) -c src/main.cpp -o src/main.o
+	rm -rf $(BUILD)
