@@ -6,9 +6,10 @@ SIZE    = arm-none-eabi-size
 
 BUILD   = build
 
-# --- Cortex-M3 / STM32F103xB ---
 MCU_FLAGS = -mcpu=cortex-m3 -mthumb -mfloat-abi=soft
 
+# if you add *.h file then you have to add new path
+# -I(fimename) EX : -Iinc
 CFLAGS  = $(MCU_FLAGS) -DSTM32F103xB -Iinc -g -O0 -Wall \
           -ffunction-sections -fdata-sections -fno-common -std=gnu11
 

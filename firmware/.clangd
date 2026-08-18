@@ -6,7 +6,12 @@ CompileFlags:
     - -mfloat-abi=soft
     - -DSTM32F103xB
     - -std=gnu11
-    - -Iinc
-    - -I"C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/12.2 mpacbti-rel1/lib/gcc/arm-none-eabi/12.2.1/include"
-    - -I"C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/12.2 mpacbti-rel1/arm-none-eabi/include"
+
+    # PATH
+    - -ID:/pith/pith/firmware/inc
+    - -IC:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/12.2 mpacbti-rel1/lib/gcc/arm-none-eabi/12.2.1/include
+    - -IC:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/12.2 mpacbti-rel1/arm-none-eabi/include
   Compiler: arm-none-eabi-gcc
+
+Diagnostics:
+  UnusedIncludes: None
