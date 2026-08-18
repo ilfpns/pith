@@ -1,9 +1,9 @@
-CC=gcc
-CFLAGS=-g -Wall
+CC     = g++
+CFLAGS = -g -Wall
 
 # 중간 생성 *.o 목록
-OBJS=main.o
-TARGET=pith.out
+OBJS   = src/main.o
+TARGET = pith.out
 
 all: $(TARGET)
 
@@ -13,3 +13,6 @@ clean:
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS)
+
+src/main.o: src/main.cpp
+	$(CC) $(CFLAGS) -c src/main.cpp -o src/main.o
