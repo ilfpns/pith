@@ -28,12 +28,20 @@ OBJS    = $(SRCS_C:%.c=$(BUILD)/%.o) $(SRCS_S:%.s=$(BUILD)/%.o)
 
 all: $(BUILD)/$(TARGET).bin
 
+ifeq ($(OS),Windows_NT)
+MKDIR = if not exist "$(subst /,\,$(1))" mkdir "$(subst /,\,$(1))"
+RMDIR = if exist "$(subst /,\,$(1))" rmdir /s /q "$(subst /,\,$(1))"
+else
+MKDIR = mkdir -p $(1)
+RMDIR = rm -rf $(1)
+endif
+
 $(BUILD)/%.o: %.c
-	@mkdir -p $(dir $@)
+	@$(call MKDIR,$(dir $@))
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD)/%.o: %.s
-	@mkdir -p $(dir $@)
+	@$(call MKDIR,$(dir $@))
 	$(CC) $(ASFLAGS) -c $< -o $@
 
 $(BUILD)/$(TARGET).elf: $(OBJS) linker/stm32f103xb.ld
@@ -44,7 +52,7 @@ $(BUILD)/$(TARGET).bin: $(BUILD)/$(TARGET).elf
 	$(OBJCOPY) -O binary $< $@
 
 flash: $(BUILD)/$(TARGET).bin
-	st-flash write $(BUILD)/$(TARGET).bin 0x8000000
+	powershell -NoProfile -ExecutionPolicy Bypass -File scripts/flash.ps1 -BinPath "$(BUILD)/$(TARGET).bin"
 
 clean:
-	rm -rf $(BUILD)
+	@$(call RMDIR,$(BUILD))
