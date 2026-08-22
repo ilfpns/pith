@@ -1,9 +1,9 @@
 #include "stm32f1xx.h"
+#include "../clock/clock_setting.h"
 
-int main(void)
-{
-    while (1)
-    {
-        /* Phase 1 sanity check: empty loop, no peripherals touched yet */
+int main(void) {
+    APB2EN_CLOCK;
+    while (1) {
+
     }
 }
