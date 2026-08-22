@@ -19,7 +19,7 @@ LDFLAGS = $(MCU_FLAGS) -Tlinker/stm32f103xb.ld -nostartfiles \
           -specs=nano.specs -specs=nosys.specs \
           -Wl,--gc-sections -Wl,-Map=$(BUILD)/$(TARGET).map
 
-SRCS_C  = src/main.c src/syscalls.c startup/system_stm32f1xx.c
+SRCS_C  = src/main/main.c src/main/syscalls.c startup/system_stm32f1xx.c
 SRCS_S  = startup/startup_stm32f103xb.s
 
 OBJS    = $(SRCS_C:%.c=$(BUILD)/%.o) $(SRCS_S:%.s=$(BUILD)/%.o)
