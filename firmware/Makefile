@@ -1,3 +1,9 @@
+# Force cmd.exe as the recipe shell regardless of what invokes make.
+# Without this, make picks whichever sh.exe it finds first on PATH (e.g. Git
+# Bash's), which breaks the "if exist ... mkdir/rmdir" batch syntax below —
+# that's why `make clean` worked from PowerShell but failed from Git Bash.
+SHELL   = cmd.exe
+
 TARGET  = pith
 
 CC      = arm-none-eabi-gcc
