@@ -1,0 +1,19 @@
+CompileFlags:
+  Add:
+    - -x
+    - c
+    - --target=arm-none-eabi
+    - -mcpu=cortex-m3
+    - -mthumb
+    - -mfloat-abi=soft
+    - -DSTM32F103xB
+    - -std=gnu11
+
+    # PATH
+    - -ID:/pith/pith/firmware/inc
+    - -IC:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/lib/gcc/arm-none-eabi/14.2.1/include
+    - -IC:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/arm-none-eabi/include
+  Compiler: arm-none-eabi-gcc
+
+Diagnostics:
+  UnusedIncludes: None
