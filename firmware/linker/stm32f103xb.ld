@@ -60,11 +60,8 @@ SECTIONS
     __fini_array_end = .;
   } >FLASH
 
-  /* Used by startup to initialize .data */
-  _sidata = LOADADDR(.data);
-
   /* Initialized data: lives in FLASH, copied to RAM at startup */
-  .data : AT (_sidata)
+  .data :
   {
     . = ALIGN(4);
     _sdata = .;
@@ -72,7 +69,10 @@ SECTIONS
     *(.data*)
     . = ALIGN(4);
     _edata = .;
-  } >RAM
+  } >RAM AT>FLASH
+
+  /* Used by startup to initialize .data (.data가 먼저 배치된 뒤에 와야 함) */
+  _sidata = LOADADDR(.data);
 
   /* Zero-initialized data: RAM only, cleared at startup */
   .bss :
