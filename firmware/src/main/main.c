@@ -1,6 +1,8 @@
 #include "stm32f103xb.h"
 #include "stm32f1xx.h"
+
 #include "../clock/clock_setting.h"
+#include "../gpio/afio_setting.h"
 
 #include <math.h>
 #include <stdint.h>
