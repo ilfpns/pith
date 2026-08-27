@@ -25,11 +25,12 @@ mkdir -p "$BUILD"
 
 $CC $CFLAGS -c src/main/main.c -o "$BUILD/main.o"
 $CC $CFLAGS -c src/main/syscalls.c -o "$BUILD/syscalls.o"
+$CC $CFLAGS -c src/clock/clock_setting.c -o "$BUILD/clock_setting.o"
 $CC $CFLAGS -c startup/system_stm32f1xx.c -o "$BUILD/system_stm32f1xx.o"
 $CC $ASFLAGS -c startup/startup_stm32f103xb.s -o "$BUILD/startup_stm32f103xb.o"
 
 $CC $LDFLAGS -o "$BUILD/$TARGET.elf" \
-    "$BUILD/main.o" "$BUILD/syscalls.o" "$BUILD/system_stm32f1xx.o" "$BUILD/startup_stm32f103xb.o"
+    "$BUILD/main.o" "$BUILD/syscalls.o" "$BUILD/clock_setting.o" "$BUILD/system_stm32f1xx.o" "$BUILD/startup_stm32f103xb.o"
 
 $OBJCOPY -O binary "$BUILD/$TARGET.elf" "$BUILD/$TARGET.bin"
 
