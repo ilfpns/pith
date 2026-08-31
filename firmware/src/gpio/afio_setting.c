@@ -13,10 +13,12 @@ void set_the_exti() {
     NVIC->ISER[EXTI15_10_IRQn >> 5] = (1UL << (EXTI15_10_IRQn & 0x1F));
 }
 
-void EXTI13_IRQHandler() {
+void EXTI15_10_IRQHandler() {
     if (EXTI->PR == EXTI_LINE13) {
         if ((GPIOC->IDR & GPIO_IDR_IDR13) != 0) {
             GPIOA->BSRR = GPIO_BSRR_BS5;
+
+            EXTI->PR &= 1UL;
         }
         else {
             GPIOA->BSRR = GPIO_BSRR_BR5;
