@@ -8,7 +8,7 @@
 
 // AFIO sets
 #define AFIO_EXTICR4_EXTI13 (0x3UL << 9)
-#define AFIO_EXTICR4_EXTI13_PC (0x2UL << 2)
+#define AFIO_EXTICR4_EXTI13_PC (0x2UL << 4)
 
 // EXTI sets
 #define EXTI_LINE13 (1UL << 13)

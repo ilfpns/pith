@@ -14,14 +14,13 @@ void set_the_exti() {
 }
 
 void EXTI15_10_IRQHandler() {
-    if (EXTI->PR == EXTI_LINE13) {
+    if (EXTI->PR & EXTI_LINE13) {
         if ((GPIOC->IDR & GPIO_IDR_IDR13) != 0) {
             GPIOA->BSRR = GPIO_BSRR_BS5;
-
-            EXTI->PR &= 1UL;
         }
         else {
             GPIOA->BSRR = GPIO_BSRR_BR5;
         }
+        EXTI->PR = EXTI_LINE13;
     }
 }
