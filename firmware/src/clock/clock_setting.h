@@ -3,6 +3,7 @@
 // Prevent redefinition
 #undef  RCC_APB2ENR_IOPAEN
 #undef  RCC_APB2ENR_IOPCEN
+#undef RCC_APB2ENR_AFIOEN
 
 #undef GPIO_CRL_CNF5
 #undef GPIO_CRL_MODE5
@@ -28,6 +29,7 @@
 #define GPIO_CRH_MODE13    (0x3UL << 20)
 
 // Init peripheral register
+#define RCC_APB2ENR_AFIOEN (1UL << 0)
 #define RCC_APB2ENR_IOPAEN (1UL << 2)
 #define RCC_APB2ENR_IOPCEN (1UL << 4)
 

@@ -10,17 +10,9 @@
 
 int main(void) {
     set_the_clock();
-    printf("clock settings succeful");
+    set_the_exti();
 
     GPIOA->BSRR = GPIO_BSRR_BR5;
 
-    for (;;) {
-        if ((GPIOC->IDR & GPIO_IDR_IDR13) == 0) {
-            printf("1");
-            GPIOA->BSRR = GPIO_BSRR_BS5;
-        } else {
-            printf("0");
-            GPIOA->BSRR = GPIO_BSRR_BR5;
-        }
-    }
+    for (;;) {}
 }
