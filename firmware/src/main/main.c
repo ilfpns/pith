@@ -11,7 +11,6 @@
 int main(void) {
     set_the_clock();
     set_the_exti();
-    printf("clock settings succeful");
 
     GPIOA->BSRR = GPIO_BSRR_BR5;
 
