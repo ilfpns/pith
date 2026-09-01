@@ -27,3 +27,5 @@
 #define RCC_CFGR_HPRE_DIV1  (0x0UL << 4)
 #define RCC_CFGR_PPRE1_DIV1 (0x0UL << 8)
 #define RCC_CFGR_PPRE2_DIV1 (0x0UL << 11)
+
+void set_the_hsi_clock();

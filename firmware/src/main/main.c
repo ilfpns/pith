@@ -2,6 +2,7 @@
 #include "stm32f1xx.h"
 
 #include "../clock/clock_setting.h"
+#include "../clock/hse_clock_setting.h"
 #include "../gpio/afio_setting.h"
 
 #include <math.h>
@@ -9,7 +10,8 @@
 #include <stdio.h>
 
 int main(void) {
-    set_the_clock();
+    set_the_hsi_clock();
+    set_the_gpio_regi();
     set_the_exti();
 
     GPIOA->BSRR = GPIO_BSRR_BR5;

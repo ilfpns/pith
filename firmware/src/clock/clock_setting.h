@@ -33,8 +33,6 @@
 #define RCC_APB2ENR_IOPAEN (1UL << 2)
 #define RCC_APB2ENR_IOPCEN (1UL << 4)
 
-#define RCC_CFGR_SW (0x3UL << 0)
-
 // Bsrr configuration
 #define GPIO_BSRR_BS5      (1UL << 5)
 #define GPIO_BSRR_BR5      (1UL << 21)
@@ -43,4 +41,4 @@
 #define GPIO_IDR_IDR13     (1UL << 13)
 #define GPIO_ODR_ODR13     (1UL << 13)
 
-void set_the_clock();
+void set_the_gpio_regi();
