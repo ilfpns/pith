@@ -11,11 +11,14 @@ void set_the_exti() {
     EXTI->RTSR |= EXTI_LINE13;
 
     NVIC->ISER[EXTI15_10_IRQn >> 5] = (1UL << (EXTI15_10_IRQn & 0x1F));
+
+    return;
 }
 
 void EXTI15_10_IRQHandler() {
     if (EXTI->PR & EXTI_LINE13) {
         if ((GPIOC->IDR & GPIO_IDR_IDR13) != 0) {
+            // This board is active-low
             GPIOA->BSRR = GPIO_BSRR_BS5;
         }
         else {
@@ -23,4 +26,6 @@ void EXTI15_10_IRQHandler() {
         }
         EXTI->PR = EXTI_LINE13;
     }
+
+    return;
 }

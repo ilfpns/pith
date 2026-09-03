@@ -41,4 +41,4 @@
 #define GPIO_IDR_IDR13     (1UL << 13)
 #define GPIO_ODR_ODR13     (1UL << 13)
 
-void set_the_clock();
+void set_the_gpio_regi();
