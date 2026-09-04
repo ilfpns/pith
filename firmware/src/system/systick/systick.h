@@ -2,7 +2,7 @@
 #include "stm32f1xx.h"
 #include <stdint.h>
 
-#define SYSTEM_CORE_CLOCK 72,000,000
+#define SYSTEM_CORE_CLOCK 72000000
 
 void init_the_systick();
 
