@@ -21,7 +21,10 @@ int main(void) {
     // init LED
     GPIOA->BSRR = GPIO_BSRR_BR5;
 
-    create_new_task("Task1", 5, 256, task1);
+    uint8_t err_state = create_new_task("Task1", 5, 256, task1);
+    if (err_state) {
+
+    }
 
     for (;;) {}
 }

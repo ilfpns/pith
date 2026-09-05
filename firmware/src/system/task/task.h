@@ -10,6 +10,7 @@ typedef struct {
     uint8_t priority;
     uint8_t state;
     uint8_t *sp;
+    uint32_t stack_mem;
 } TCB_t;
 
 void *stack_init(uint32_t *stack_top, void (*task_enrty)(void));
@@ -29,4 +30,4 @@ void *stack_init(uint32_t *stack_top, void (*task_enrty)(void));
  */
 uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, void (*stack_entry)(void));
 
-void task1();
+void task1(void);

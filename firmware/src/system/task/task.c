@@ -36,7 +36,7 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
         return 1;
     }
 
-    TCB_t *tcb = &tcb_pool[current_free_slot];
+    TCB_t *tcb = &tcb_pool[current_free_slot++];
 
     tcb->task_name = task_name;
     tcb->priority = priority;
@@ -44,9 +44,9 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     uint32_t *stack_mem = (uint32_t *)malloc(sizeof(uint32_t) * stack_size);
     if (stack_mem == NULL) {
         printf("Can't get a new stack mem\n");
+        return 1;
     }
-
-    uint32_t *add_stack_mem_addr = &stack_mem[current_free_slot++];
+    tcb->stack_mem = *stack_mem;
 
     uint32_t *stack_top = stack_mem + stack_size;
     tcb->sp = stack_init(stack_top, stack_entry);
