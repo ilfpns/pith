@@ -6,7 +6,7 @@ static TCB_t tcb_pool[MAX_TASK_COUNT];
 uint8_t current_free_slot;
 
 void *stack_init(uint32_t *stack_top, void (*task_enrty)(void)) {
-    *(--stack_top) = 0x10000000;             // xPSR Thumb bit
+    *(--stack_top) = 0x1000000;             // xPSR Thumb bit
     *(--stack_top) = (uint32_t)task_enrty;  // PC
     *(--stack_top) = 0xFFFFFFFD;            // LR   - EXC_RETURN (PSP, no FPU)
     *(--stack_top) = 0;                     // R12
@@ -28,7 +28,7 @@ void *stack_init(uint32_t *stack_top, void (*task_enrty)(void)) {
 }
 
 uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, uint32_t *stack_mem, void (*stack_entry)(void)) {
-    if (current_free_slot > 10) {
+    if (current_free_slot >= MAX_TASK_COUNT) {
         printf("Can't create new task \n : Max task limit (%d)", MAX_TASK_COUNT);
         return 1;
     }
@@ -41,7 +41,7 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     uint32_t *stack_top = stack_mem + stack_size;
     tcb->sp = stack_init(stack_top, stack_entry);
 
-    if (!((int)tcb->sp & 0x0000000)) {
+    if (tcb->sp == NULL) {
         printf("staack init failed");
         return 1;
     }
