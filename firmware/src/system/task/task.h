@@ -19,5 +19,14 @@ void *stack_init(uint32_t *stack_top, void (*task_enrty)(void));
  * @retval
  *  - 1 : Error
  *  - 2 : Succes to create new task
+ *
+ *
+ * @param
+ * - task_name  : Task name
+ * - priority   : Task priority
+ * - stack_size : Size of the stack used by the task
+ * - stack_entry: Entry function of the task
  */
-uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, uint32_t *stack_mem, void (*stack_entry)(void));
+uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, void (*stack_entry)(void));
+
+void task1();

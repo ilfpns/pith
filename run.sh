@@ -28,11 +28,12 @@ $CC $CFLAGS -c src/main/syscalls.c -o "$BUILD/syscalls.o"
 $CC $CFLAGS -c src/clock/clock_setting.c -o "$BUILD/clock_setting.o"
 $CC $CFLAGS -c src/gpio/afio_setting.c -o "$BUILD/afio_setting.o"
 $CC $CFLAGS -c src/system/systick/systick.c -o "$BUILD/systick.o"
+$CC $CFLAGS -c src/system/task/task.c -o "$BUILD/task.o"
 $CC $CFLAGS -c startup/system_stm32f1xx.c -o "$BUILD/system_stm32f1xx.o"
 $CC $ASFLAGS -c startup/startup_stm32f103xb.s -o "$BUILD/startup_stm32f103xb.o"
 
 $CC $LDFLAGS -o "$BUILD/$TARGET.elf" \
-    "$BUILD/main.o" "$BUILD/syscalls.o" "$BUILD/clock_setting.o" "$BUILD/afio_setting.o" "$BUILD/systick.o" "$BUILD/system_stm32f1xx.o" "$BUILD/startup_stm32f103xb.o"
+    "$BUILD/main.o" "$BUILD/syscalls.o" "$BUILD/clock_setting.o" "$BUILD/afio_setting.o" "$BUILD/systick.o" "$BUILD/task.o" "$BUILD/system_stm32f1xx.o" "$BUILD/startup_stm32f103xb.o"
 
 $OBJCOPY -O binary "$BUILD/$TARGET.elf" "$BUILD/$TARGET.bin"
 
