@@ -14,13 +14,16 @@
 
 typedef struct {
     char     *task_name;
+    uint32_t *sp;
+    uint32_t *stack_mem;
     uint8_t  priority;
     uint8_t  state; // Do not use yet
-    uint8_t  *sp;
-    uint32_t *stack_mem;
 } TCB_t;
 
-extern uint32_t current_task_top_sp;
+extern TCB_t tcb_pool[MAX_TASK_COUNT];
+extern TCB_t *current_task;
+extern TCB_t *next_task;
+extern uint8_t task_count;
 
 /**
  * @brief init the stack mem place

@@ -23,11 +23,15 @@ int main(void) {
     GPIOA->BSRR = GPIO_BSRR_BR5;
     uint8_t err_state;
     err_state = create_new_task("Task1", 5, 256, task1);
-    err_state = create_new_task("Task2", 5, 513, task2);
-
     if (err_state == 1) {
-        printf("Error create new task");
+        printf("Error create new task1");
     }
+
+    err_state = create_new_task("Task2", 5, 513, task2);
+    if (err_state == 1) {
+        printf("Error create new task2");
+    }
+
     __asm volatile("svc 0");
 
     for (;;) {}
