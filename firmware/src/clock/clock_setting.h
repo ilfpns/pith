@@ -20,6 +20,9 @@
 #undef GPIO_IDR_IDR13
 #undef GPIO_ODR_ODR13
 
+#ifndef GPIO_SETTING
+#define GPIO_SETTING
+
 // Pin Clock
 #define GPIO_CRL_CNF5      (0x3UL << 22)
 #define GPIO_CRL_MODE5     (0x3UL << 20)
@@ -43,3 +46,5 @@
 #define GPIO_ODR_ODR13     (1UL << 13)
 
 void set_the_gpio_regi();
+
+#endif
