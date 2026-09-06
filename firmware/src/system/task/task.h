@@ -9,18 +9,24 @@
 #include "../../gpio/afio_setting.h"
 #include "../../clock/clock_setting.h"
 
+#ifndef TASK_HEADER
+#define TASK_HEADER
+
 #define STACK_SIZE     256
 #define MAX_TASK_COUNT 10
 
 typedef struct {
     char     *task_name;
+    uint32_t *sp;
+    uint32_t *stack_mem;
     uint8_t  priority;
     uint8_t  state; // Do not use yet
-    uint8_t  *sp;
-    uint32_t *stack_mem;
 } TCB_t;
 
-extern uint32_t current_task_top_sp;
+extern TCB_t tcb_pool[MAX_TASK_COUNT];
+extern TCB_t *current_task;
+extern TCB_t *next_task;
+extern uint8_t task_count;
 
 /**
  * @brief init the stack mem place
@@ -46,3 +52,5 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 // task function prototype
 void task1(void);
 void task2(void);
+
+#endif

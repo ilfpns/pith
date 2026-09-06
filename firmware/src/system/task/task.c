@@ -1,9 +1,12 @@
 #include "task.h"
 
-static TCB_t tcb_pool[MAX_TASK_COUNT];
+TCB_t tcb_pool[MAX_TASK_COUNT];
 uint32_t stack_mem_addr[MAX_TASK_COUNT];
-uint32_t current_task_top_sp;
 
+TCB_t *current_task;
+TCB_t *next_task;
+
+uint8_t task_count;
 uint8_t current_free_slot;
 
 void *stack_init(uint32_t *stack_top, void (*task_enrty)(void)) {
@@ -34,7 +37,12 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
         return 1;
     }
 
-    TCB_t *tcb = &tcb_pool[current_free_slot++];
+    TCB_t *tcb = &tcb_pool[current_free_slot];
+    if (current_free_slot == 0) {
+        current_task = tcb;
+    }
+    current_free_slot++;
+    task_count++;
 
     tcb->task_name = task_name;
     tcb->priority = priority;
@@ -48,7 +56,6 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 
     uint32_t *stack_top = stack_mem + stack_size;
     tcb->sp = stack_init(stack_top, stack_entry);
-    current_task_top_sp = (uint32_t)tcb->sp;
 
     if (tcb->sp == NULL) {
         printf("staack init failed");
