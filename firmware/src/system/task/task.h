@@ -9,6 +9,9 @@
 #include "../../gpio/afio_setting.h"
 #include "../../clock/clock_setting.h"
 
+#ifndef TASK_HEADER
+#define TASK_HEADER
+
 #define STACK_SIZE     256
 #define MAX_TASK_COUNT 10
 
@@ -49,3 +52,5 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 // task function prototype
 void task1(void);
 void task2(void);
+
+#endif
