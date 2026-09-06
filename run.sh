@@ -20,7 +20,6 @@ if [ "${1:-}" = "clean" ]; then
     echo "cleaned $BUILD/"
     exit 0
 fi
-
 mkdir -p "$BUILD"
 
 $CC $CFLAGS -c src/main/main.c -o "$BUILD/main.o"
