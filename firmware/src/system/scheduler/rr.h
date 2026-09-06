@@ -6,10 +6,4 @@
 
 #include "../task/task.h"
 
-typedef struct {
-    uint8_t time_slice;
-    TCB_t   *current_task;
-    TCB_t   *next_task;
-} RR_t;
-
 void round_robin_init(void);
