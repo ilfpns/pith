@@ -1,10 +1,12 @@
 #include "task.h"
+#include "cmsis_gcc.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 static TCB_t tcb_pool[MAX_TASK_COUNT];
 uint32_t stack_mem_addr[MAX_TASK_COUNT];
+uint32_t current_task_top_sp;
 
 uint8_t current_free_slot;
 
@@ -46,10 +48,11 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
         printf("Can't get a new stack mem\n");
         return 1;
     }
-    tcb->stack_mem = *stack_mem;
+    tcb->stack_mem = stack_mem;
 
     uint32_t *stack_top = stack_mem + stack_size;
     tcb->sp = stack_init(stack_top, stack_entry);
+    current_task_top_sp = (uint32_t)tcb->sp;
 
     if (tcb->sp == NULL) {
         printf("staack init failed");

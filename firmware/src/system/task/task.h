@@ -1,6 +1,9 @@
 #include "stm32f103xb.h"
 #include "stm32f1xx.h"
+#include "cmsis_gcc.h"
 #include <stdint.h>
+#include "../../gpio/afio_setting.h"
+#include "../../clock/clock_setting.h"
 
 #define STACK_SIZE     256
 #define MAX_TASK_COUNT 10
@@ -10,8 +13,10 @@ typedef struct {
     uint8_t priority;
     uint8_t state;
     uint8_t *sp;
-    uint32_t stack_mem;
+    uint32_t *stack_mem;
 } TCB_t;
+
+extern uint32_t current_task_top_sp;
 
 void *stack_init(uint32_t *stack_top, void (*task_enrty)(void));
 

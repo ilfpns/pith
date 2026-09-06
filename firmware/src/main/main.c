@@ -1,5 +1,6 @@
 #include "stm32f103xb.h"
 #include "stm32f1xx.h"
+#include "cmsis_gcc.h"
 
 #include "../clock/clock_setting.h"
 #include "../clock/hse_clock_setting.h"
@@ -22,9 +23,10 @@ int main(void) {
     GPIOA->BSRR = GPIO_BSRR_BR5;
 
     uint8_t err_state = create_new_task("Task1", 5, 256, task1);
-    if (err_state) {
-
+    if (err_state == 1) {
+        printf("Error create new task");
     }
+    __asm volatile("svc 0");
 
     for (;;) {}
 }
