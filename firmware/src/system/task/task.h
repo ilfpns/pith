@@ -13,10 +13,10 @@
 #define MAX_TASK_COUNT 10
 
 typedef struct {
-    char    *task_name;
-    uint8_t priority;
-    uint8_t state;
-    uint8_t *sp;
+    char     *task_name;
+    uint8_t  priority;
+    uint8_t  state; // Do not use yet
+    uint8_t  *sp;
     uint32_t *stack_mem;
 } TCB_t;
 
