@@ -1,4 +1,5 @@
 #include "stm32f1xx.h"
+#include "stm32f103xb.h"
 
 // Prevent redefinition
 #undef AFIO_EXTICR4_EXTI13

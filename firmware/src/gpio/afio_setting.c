@@ -1,5 +1,3 @@
-#include "stm32f103xb.h"
-#include "stm32f1xx.h"
 #include "afio_setting.h"
 
 void set_the_exti() {

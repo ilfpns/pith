@@ -1,6 +1,3 @@
-#include "stm32f103xb.h"
-#include "stm32f1xx.h"
-
 #include "hse_clock_setting.h"
 #include "clock_setting.h"
 
