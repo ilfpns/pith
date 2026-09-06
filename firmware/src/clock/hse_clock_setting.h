@@ -1,4 +1,4 @@
-#include "stm32f1xx.h"
+#include "clock_setting.h"
 
 // Prevent redefinition
 #undef  RCC_CFGR_SW

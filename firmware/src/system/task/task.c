@@ -1,8 +1,4 @@
 #include "task.h"
-#include "cmsis_gcc.h"
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 static TCB_t tcb_pool[MAX_TASK_COUNT];
 uint32_t stack_mem_addr[MAX_TASK_COUNT];
