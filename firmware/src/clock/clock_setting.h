@@ -1,4 +1,5 @@
 #include "stm32f1xx.h"
+#include "stm32f103xb.h"
 
 // Prevent redefinition
 #undef  RCC_APB2ENR_IOPAEN
@@ -41,4 +42,4 @@
 #define GPIO_IDR_IDR13     (1UL << 13)
 #define GPIO_ODR_ODR13     (1UL << 13)
 
-void set_the_clock();
+void set_the_gpio_regi();
