@@ -2,11 +2,17 @@
 
 void round_robin_init(void) {
     uint8_t current_idx = current_task - tcb_pool;
-    if ((tcb_pool[current_idx].state) == TASK_RUNNING) {
-        current_task->state = TASK_READY;
-    }
-    uint8_t next_idx = find_ready_task(current_idx);
 
+    if ((tcb_pool[current_idx].state) == TASK_RUNNING) {
+        if ((is_stack_ok(current_task))) {
+            current_task->state = TASK_READY;
+        }
+        else {
+            current_task->state = TASK_PREVENT;
+        }
+    }
+
+    uint8_t next_idx = find_ready_task(current_idx);
     next_task = &tcb_pool[next_idx];
     next_task->state = TASK_RUNNING;
 }

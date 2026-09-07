@@ -31,6 +31,10 @@ void *stack_init(uint32_t *stack_top, void (*task_enrty)(void)) {
     return stack_top;
 }
 
+uint32_t is_stack_ok(TCB_t *tcb) {
+    return tcb->stack_mem[0] == STACK_CANARY;
+}
+
 uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, void (*stack_entry)(void)) {
     if (current_free_slot >= MAX_TASK_COUNT) {
         printf("Can't create new task \n : Max task limit (%d)\n", MAX_TASK_COUNT);
@@ -38,6 +42,7 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     }
 
     TCB_t *tcb = &tcb_pool[current_free_slot];
+
     if (current_free_slot == 0) {
         current_task = tcb;
     }
@@ -53,6 +58,7 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
         return 1;
     }
     tcb->stack_mem = stack_mem;
+    stack_mem[0] = STACK_CANARY;
 
     uint32_t *stack_top = stack_mem + stack_size;
     tcb->sp = stack_init(stack_top, stack_entry);

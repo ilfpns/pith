@@ -14,6 +14,7 @@
 
 #define STACK_SIZE     256
 #define MAX_TASK_COUNT 10
+#define STACK_CANARY 0xDEADBEEF
 
 typedef enum  {
     TASK_READY   = 0,
@@ -57,6 +58,8 @@ void *stack_init(uint32_t *stack_top, void (*task_enrty)(void));
  * - stack_entry: Entry function of the task
  */
 uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, void (*stack_entry)(void));
+
+uint32_t is_stack_ok(TCB_t *tcb);
 
 // task function prototype
 void task1(void);
