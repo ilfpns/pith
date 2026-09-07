@@ -6,4 +6,10 @@
 
 #include "../task/task.h"
 
+#ifndef RR_SETTING
+#define RR_SETTING
+
 void round_robin_init(void);
+uint8_t find_ready_task(uint8_t start_idx);
+
+#endif
