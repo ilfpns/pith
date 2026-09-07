@@ -19,6 +19,7 @@ typedef struct {
     char     *task_name;
     uint32_t *sp;
     uint32_t *stack_mem;
+    uint32_t wake_ticks;
     uint8_t  priority;
     uint8_t  state; // Do not use yet
 } TCB_t;

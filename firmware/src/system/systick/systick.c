@@ -1,5 +1,4 @@
 #include "systick.h"
-#include <time.h>
 
 volatile uint32_t Os_Ticks;
 
@@ -18,4 +17,12 @@ void SysTick_Handler() {
         round_robin_init();
         SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
     }
+}
+
+void task_delay(TCB_t *tcb, uint32_t delay_time) {
+    current_task->state = TASK_BLOCK;
+    current_task->wake_ticks = Os_Ticks + delay_time;
+    round_robin_init();
+
+    SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
 }
