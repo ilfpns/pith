@@ -1,10 +1,12 @@
 #include "stm32f1xx.h"
 #include "stm32f103xb.h"
 
+#ifndef AFIO_EXTI_SETTING
+#define AFIO_EXTI_SETTING
+
 // Prevent redefinition
 #undef AFIO_EXTICR4_EXTI13
 #undef AFIO_EXTICR4_EXTI13_PC
-
 #undef EXTI_LINE13
 
 // AFIO sets
@@ -16,3 +18,5 @@
 
 void EXTI15_10_IRQHandler();
 void set_the_exti();
+
+#endif

@@ -1,16 +1,16 @@
 #include "task.h"
+#include "../../system/systick/systick.h"
 
 void task1 (void) {
     for (;;) {
         GPIOA->BSRR = GPIO_BSRR_BS5;
-        for(uint32_t i = 0; i < 700000; i++) {}
-
+        task_delay(current_task, 200);
     }
 }
 
 void task2 (void) {
     for (;;) {
         GPIOA->BSRR = GPIO_BSRR_BR5;
-        for(uint32_t i = 0; i < 700000; i++) {}
+        task_delay(current_task, 200);
     }
 }
