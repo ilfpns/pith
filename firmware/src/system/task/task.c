@@ -56,6 +56,7 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 
     uint32_t *stack_top = stack_mem + stack_size;
     tcb->sp = stack_init(stack_top, stack_entry);
+    tcb->state = TASK_READY;
 
     if (tcb->sp == NULL) {
         printf("staack init failed");

@@ -15,6 +15,13 @@
 #define STACK_SIZE     256
 #define MAX_TASK_COUNT 10
 
+typedef enum  {
+    TASK_READY   = 0,
+    TASK_RUNNING = 1,
+    TASK_BLOCK   = 2,
+    TASK_PREVENT = 3,
+} TASK_STATE;
+
 typedef struct {
     char     *task_name;
     uint32_t *sp;
@@ -28,6 +35,7 @@ extern TCB_t tcb_pool[MAX_TASK_COUNT];
 extern TCB_t *current_task;
 extern TCB_t *next_task;
 extern uint8_t task_count;
+extern volatile uint32_t Os_Ticks;
 
 /**
  * @brief init the stack mem place
