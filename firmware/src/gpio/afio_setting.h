@@ -1,13 +1,13 @@
 #include "stm32f1xx.h"
 #include "stm32f103xb.h"
 
+#ifndef AFIO_EXTI_SETTING
+#define AFIO_EXTI_SETTING
+
 // Prevent redefinition
 #undef AFIO_EXTICR4_EXTI13
 #undef AFIO_EXTICR4_EXTI13_PC
 #undef EXTI_LINE13
-
-#ifndef AFIO_EXTI_SETTING
-#define AFIO_EXTI_SETTING
 
 // AFIO sets
 #define AFIO_EXTICR4_EXTI13    (0x3UL << 9)

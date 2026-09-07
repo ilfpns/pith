@@ -1,5 +1,8 @@
 #include "clock_setting.h"
 
+#ifndef RCC_HSI_SETTING
+#define RCC_HSI_SETTING
+
 // Prevent redefinition
 #undef  RCC_CFGR_SW
 #undef  RCC_CFGR_SWS
@@ -12,9 +15,6 @@
 #undef  RCC_CFGR_HPRE_DIV1
 #undef  RCC_CFGR_PPRE1_DIV1
 #undef  RCC_CFGR_PPRE2_DIV1
-
-#ifndef RCC_HSI_SETTING
-#define RCC_HSI_SETTING
 
 // Basic clock define
 #define RCC_CFGR_SW         (0x3UL << 0)

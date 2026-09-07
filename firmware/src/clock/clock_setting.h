@@ -1,6 +1,9 @@
 #include "stm32f1xx.h"
 #include "stm32f103xb.h"
 
+#ifndef GPIO_SETTING
+#define GPIO_SETTING
+
 // Prevent redefinition
 #undef  RCC_APB2ENR_IOPAEN
 #undef  RCC_APB2ENR_IOPCEN
@@ -19,9 +22,6 @@
 
 #undef GPIO_IDR_IDR13
 #undef GPIO_ODR_ODR13
-
-#ifndef GPIO_SETTING
-#define GPIO_SETTING
 
 // Pin Clock
 #define GPIO_CRL_CNF5      (0x3UL << 22)
@@ -46,5 +46,6 @@
 #define GPIO_ODR_ODR13     (1UL << 13)
 
 void set_the_gpio_regi();
+void set_the_hsi_clock();
 
 #endif

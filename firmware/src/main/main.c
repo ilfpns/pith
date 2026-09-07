@@ -3,7 +3,6 @@
 #include "cmsis_gcc.h"
 
 #include "../clock/clock_setting.h"
-#include "../clock/hse_clock_setting.h"
 #include "../gpio/afio_setting.h"
 #include "../system/systick/systick.h"
 #include "../system/task/task.h"

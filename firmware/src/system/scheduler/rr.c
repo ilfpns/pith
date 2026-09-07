@@ -17,7 +17,7 @@ void round_robin_init(void) {
     next_task->state = TASK_RUNNING;
 }
 
-static uint8_t find_ready_task(uint8_t start_idx) {
+uint8_t find_ready_task(uint8_t start_idx) {
     for (uint8_t offset = 1; offset <= task_count; offset++) {
         uint8_t idx = (start_idx + offset) % task_count;
 
