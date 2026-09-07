@@ -15,4 +15,3 @@ make flash    # scripts/flash.ps1로 DAPLink 드라이브에 복사 (ST-Link 연
 make clean    # build/ 정리
 ```
 <br>
-새 소스 파일을 `src/<module>/`에 추가하면 `firmware/Makefile`의 `SRCS_C`에도 경로를 추가해야 빌드에 포함됩니다.
