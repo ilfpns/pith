@@ -11,5 +11,6 @@
 
 void round_robin_init(void);
 uint8_t find_next_task(uint8_t start_idx);
+uint8_t find_rr_task(uint8_t start_idx);
 
 #endif

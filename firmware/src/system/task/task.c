@@ -51,9 +51,7 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     tcb->task_name = task_name;
     tcb->priority = priority;
 
-    if (current_free_slot == 0) {
-        priority_verify(tcb);
-    }
+    priority_verify(tcb);
     current_free_slot++;
     task_count++;
 
