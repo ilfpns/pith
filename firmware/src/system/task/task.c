@@ -1,4 +1,5 @@
 #include "task.h"
+#include <stdint.h>
 
 TCB_t tcb_pool[MAX_TASK_COUNT];
 uint32_t stack_mem_addr[MAX_TASK_COUNT];
@@ -8,6 +9,7 @@ TCB_t *next_task;
 
 uint8_t task_count;
 uint8_t current_free_slot;
+uint8_t max_priority;
 
 void *stack_init(uint32_t *stack_top, void (*task_enrty)(void)) {
     *(--stack_top) = 0x1000000;             // xPSR Thumb bit
@@ -40,17 +42,21 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
         printf("Can't create new task \n : Max task limit (%d)\n", MAX_TASK_COUNT);
         return 1;
     }
+    if (priority > 10) {
+        printf("Can't create priority : (%d), smaller than 10", priority);
+        return 1;
+    }
 
     TCB_t *tcb = &tcb_pool[current_free_slot];
+    tcb->task_name = task_name;
+    tcb->priority = priority;
 
+    priority_verify(tcb);
     if (current_free_slot == 0) {
         current_task = tcb;
     }
     current_free_slot++;
     task_count++;
-
-    tcb->task_name = task_name;
-    tcb->priority = priority;
 
     uint32_t *stack_mem = (uint32_t *)malloc(sizeof(uint32_t) * stack_size);
     if (stack_mem == NULL) {
@@ -70,4 +76,10 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     }
 
     return 2;
+}
+
+void priority_verify(TCB_t *tcb) {
+    if (tcb->priority > max_priority) {
+        max_priority = tcb->priority;
+    }
 }
