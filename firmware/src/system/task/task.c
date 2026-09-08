@@ -48,15 +48,14 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     }
 
     TCB_t *tcb = &tcb_pool[current_free_slot];
+    tcb->task_name = task_name;
+    tcb->priority = priority;
 
     if (current_free_slot == 0) {
         priority_verify(tcb);
     }
     current_free_slot++;
     task_count++;
-
-    tcb->task_name = task_name;
-    tcb->priority = priority;
 
     uint32_t *stack_mem = (uint32_t *)malloc(sizeof(uint32_t) * stack_size);
     if (stack_mem == NULL) {

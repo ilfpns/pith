@@ -12,21 +12,24 @@ void round_robin_init(void) {
         }
     }
 
-    uint8_t next_idx = find_ready_task(current_idx);
+    uint8_t next_idx = find_next_task(current_idx);
     next_task = &tcb_pool[next_idx];
     next_task->state = TASK_RUNNING;
 }
 
-uint8_t find_ready_task(uint8_t start_idx) {
-    for (uint8_t offset = 1; offset <= task_count; offset++) {
-        uint8_t idx = (start_idx + offset) % task_count;
-
-        if (tcb_pool[idx].state == TASK_READY) {
-            return idx;
+uint8_t find_next_task(uint8_t start_idx) {
+    for (uint8_t base = 1; base <= task_count; base++) {
+        uint8_t idx = (start_idx + base) % task_count;
+        if (base == start_idx) {
+            continue;
         }
-
-        if (tcb_pool[idx].state == TASK_BLOCK && Os_Ticks >= tcb_pool[idx].wake_ticks) {
-            return idx;
+        else if (tcb_pool[base].priority > current_task->priority ) {
+            if (tcb_pool[idx].state == TASK_READY) {
+                return idx;
+            }
+            if (tcb_pool[idx].state == TASK_BLOCK && Os_Ticks >= tcb_pool[idx].wake_ticks) {
+                return idx;
+            }
         }
     }
 
