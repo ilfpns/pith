@@ -61,6 +61,8 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 
 uint32_t is_stack_ok(TCB_t *tcb);
 
+void priority_verify(TCB_t *tcb);
+
 // task function prototype
 void task1(void);
 void task2(void);
