@@ -52,6 +52,9 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     tcb->priority = priority;
 
     priority_verify(tcb);
+    if (current_free_slot == 0) {
+        current_task = tcb;
+    }
     current_free_slot++;
     task_count++;
 
@@ -79,6 +82,4 @@ void priority_verify(TCB_t *tcb) {
     if (tcb->priority > max_priority) {
         max_priority = tcb->priority;
     }
-
-    current_task = tcb;
 }
