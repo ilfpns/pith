@@ -1,4 +1,5 @@
 #include "hse_clock_setting.h"
+#include "stm32f103xb.h"
 #include "clock_setting.h"
 
 void set_the_gpio_regi () {
@@ -8,6 +9,13 @@ void set_the_gpio_regi () {
 
     GPIOA->CRL &= ~(GPIO_CRL_CNF5 | GPIO_CRL_MODE5);
     GPIOA->CRL |= GPIO_CRL_MODE5_0;
+
+    GPIOA->CRL &= ~(GPIO_CRL_CNF2 | GPIO_CRL_MODE2);
+    GPIOA->CRL |= GPIO_CRL_CNF2_1;
+    GPIOA->CRL |= (GPIO_CRL_MODE2_0 | GPIO_CRL_MODE2_1);
+
+    GPIOA->CRL &= ~(GPIO_CRL_CNF3 | GPIO_CRL_MODE3);
+    GPIOA->CRL |= GPIO_CRL_CNF3_0;
 
     GPIOC->CRH &= ~(GPIO_CRH_CNF13 | GPIO_CRH_MODE13);
     GPIOC->CRH |= GPIO_CRH_CNF13_1;
