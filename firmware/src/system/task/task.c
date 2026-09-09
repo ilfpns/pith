@@ -9,7 +9,6 @@ TCB_t *next_task;
 
 uint8_t task_count;
 uint8_t current_free_slot;
-uint8_t max_priority;
 
 void *stack_init(uint32_t *stack_top, void (*task_enrty)(void)) {
     *(--stack_top) = 0x1000000;             // xPSR Thumb bit
@@ -76,10 +75,4 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     }
 
     return 2;
-}
-
-void priority_verify(TCB_t *tcb) {
-    if (tcb->priority > max_priority) {
-        max_priority = tcb->priority;
-    }
 }

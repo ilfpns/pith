@@ -5,8 +5,8 @@
 #define GPIO_SETTING
 
 // Prevent redefinition
-#undef  RCC_APB2ENR_IOPAEN
-#undef  RCC_APB2ENR_IOPCEN
+#undef RCC_APB2ENR_IOPAEN
+#undef RCC_APB2ENR_IOPCEN
 #undef RCC_APB2ENR_AFIOEN
 
 #undef GPIO_CRL_CNF5
@@ -23,10 +23,33 @@
 #undef GPIO_IDR_IDR13
 #undef GPIO_ODR_ODR13
 
+#undef GPIO_CRL_CNF2
+#undef GPIO_CRL_CNF2_1
+
+#undef GPIO_CRL_MODE2
+#undef GPIO_CRL_MODE2_0
+#undef GPIO_CRL_MODE2_1
+
+#undef GPIO_CRL_CNF3
+#undef GPIO_CRL_CNF3_0
+#undef GPIO_CRL_MODE3
+
+
 // Pin Clock
 #define GPIO_CRL_CNF5      (0x3UL << 22)
 #define GPIO_CRL_MODE5     (0x3UL << 20)
 #define GPIO_CRL_MODE5_0   (0x1UL << 20)
+
+#define GPIO_CRL_CNF2      (0x3UL << 10)
+#define GPIO_CRL_CNF2_1    (0x3UL << 10)
+
+#define GPIO_CRL_MODE2     (0x3UL << 8)
+#define GPIO_CRL_MODE2_0    (0x1UL << 8)
+#define GPIO_CRL_MODE2_1    (0x2UL << 8)
+
+#define GPIO_CRL_CNF3      (0x3UL << 14)
+#define GPIO_CRL_CNF3_0    (0x1UL << 14)
+#define GPIO_CRL_MODE3     (0x3UL << 12)
 
 #define GPIO_CRH_CNF13     (0x3UL << 22)
 #define GPIO_CRH_CNF13_1   (0x2UL << 22)
