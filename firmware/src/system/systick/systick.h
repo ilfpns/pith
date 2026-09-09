@@ -17,6 +17,6 @@ void init_the_systick();
 
 void SysTick_Handler();
 
-void task_delay(TCB_t *tcb, uint32_t delay_time);
+void task_delay(uint32_t delay_time);
 
 #endif

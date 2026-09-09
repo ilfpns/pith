@@ -29,7 +29,7 @@ typedef struct {
     uint32_t *stack_mem;
     uint32_t wake_ticks;
     uint8_t  priority;
-    uint8_t  state; // Do not use yet
+    uint8_t  state;
 } TCB_t;
 
 extern TCB_t tcb_pool[MAX_TASK_COUNT];
