@@ -10,7 +10,7 @@
 #ifndef SYSTEM_SETTING
 #define SYSTEM_SETTING
 
-#define SYSTEM_CORE_CLOCK 72000000
+#define SYSTEM_CORE_CLOCK 36000000
 #define TIME_SLICE_TICK 10
 
 void init_the_systick();
