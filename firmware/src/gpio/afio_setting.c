@@ -1,5 +1,7 @@
 #include "afio_setting.h"
 
+static uint32_t button_count;
+
 void set_the_exti() {
     AFIO->EXTICR[3] &= ~(0xFUL << 4);
     AFIO->EXTICR[3] |= AFIO_EXTICR4_EXTI13_PC;
@@ -17,10 +19,14 @@ void EXTI15_10_IRQHandler() {
     if (EXTI->PR & EXTI_LINE13) {
         if ((GPIOC->IDR & GPIO_IDR_IDR13) != 0) {
             // This board is active-low
-            GPIOA->BSRR = GPIO_BSRR_BS5;
+            button_count++;
+
+            char buf[32];
+            snprintf(buf, sizeof(buf), "Button pressed: %u\r\n", button_count);
+            usart2_send_string(buf);
         }
         else {
-            GPIOA->BSRR = GPIO_BSRR_BR5;
+
         }
         EXTI->PR = EXTI_LINE13;
     }

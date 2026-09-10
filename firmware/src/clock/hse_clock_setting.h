@@ -57,6 +57,11 @@
 #define FLASH_ACR_LATENCY_1WS (0x1UL << 0)
 
 
+/**
+ * @brief configure hsi pll clock to 36mhz
+ * @retval None
+ * @param  None
+ */
 void set_the_hsi_clock();
 
 #endif

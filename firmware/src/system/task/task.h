@@ -59,12 +59,26 @@ void *stack_init(uint32_t *stack_top, void (*task_enrty)(void));
  */
 uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, void (*stack_entry)(void));
 
+/**
+ * @brief checking stack memory
+ * @retval uint32_t
+ * @param  TCB_t *tcb
+ */
 uint32_t is_stack_ok(TCB_t *tcb);
 
-void priority_verify(TCB_t *tcb);
-
 // task function prototype
+/**
+ * @brief demo task 1
+ * @retval None
+ * @param  None
+ */
 void task1(void);
+
+/**
+ * @brief demo task 2
+ * @retval None
+ * @param  None
+ */
 void task2(void);
 
 #endif
