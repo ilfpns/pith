@@ -17,7 +17,18 @@ typedef struct {
     volatile uint8_t lock;
 } mutex_lock_t;
 
+/**
+ * @brief Lock the mutex
+ * @retval None
+ * @param  mutex_lock_t *key
+ */
 void mutex_lock(mutex_lock_t *key);
+
+/**
+ * @brief Unlock the mutex
+ * @retval None
+ * @param  mutex_lock_t *key
+ */
 void mutex_unlock(mutex_lock_t *key);
 
 #endif

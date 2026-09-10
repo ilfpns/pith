@@ -24,21 +24,22 @@ void EXTI15_10_IRQHandler() {
         if ((GPIOC->IDR & GPIO_IDR_IDR13) != 0) {
             mutex_lock(&mutex);
             // This board is active-low
-            button_count++;
+            unbutton_count++;
 
             char buf[32];
-            snprintf(buf, sizeof(buf), "Button pressed: %u\r\n", button_count);
+            snprintf(buf, sizeof(buf), "Button unpressed: %u\r\n", unbutton_count);
             usart2_send_string(buf);
 
             mutex_unlock(&mutex);
         }
         else {
             mutex_lock(&mutex);
-            unbutton_count++;
+            button_count++;
 
             char buf[32];
-            snprintf(buf, sizeof(buf), "Button unpressed: %u\r\n", unbutton_count);
+            snprintf(buf, sizeof(buf), "Button pressed: %u\r\n", button_count);
             usart2_send_string(buf);
+
             mutex_unlock(&mutex);
         }
         EXTI->PR = EXTI_LINE13;
