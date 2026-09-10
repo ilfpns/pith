@@ -1,5 +1,10 @@
 #include "stm32f103xb.h"
 #include "stm32f1xx.h"
+#include "cmsis_gcc.h"
+
+#include "../task/task.h"
+#include "../../clock/clock_setting.h"
+
 
 #include <stdint.h>
 #include <stdio.h>
@@ -8,6 +13,7 @@
 #define MUTEX_SETTING
 
 typedef struct {
+    volatile TCB_t *owner;
     volatile uint8_t lock;
 } mutex_lock_t;
 
