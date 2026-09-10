@@ -13,6 +13,7 @@
 
 int main(void) {
     set_the_hsi_clock();
+    set_the_usart2();
     set_the_gpio_regi();
     set_the_exti();
 
