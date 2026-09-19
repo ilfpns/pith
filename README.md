@@ -1,5 +1,5 @@
 # pith
-Zero to one Nucleo — HAL 없이 레지스터부터 만드는 STM32 베어메탈 RTOS
+Zero to one Nucleo — HAL 없이 레지스터부터 만드는 STM32 베어메탈 
 -----
 #### 구현 내용
 - **클럭**: HSI + PLL로 36MHz 설정, GPIO/AFIO/EXTI/USART 클럭까지 전부 레지스터 직접 조작 (HAL 미사용)
@@ -14,12 +14,3 @@ Zero to one Nucleo — HAL 없이 레지스터부터 만드는 STM32 베어메�
 
 #### TIL
 [관련 TIL 보러가기](https://github.com/ilfpns/IL/tree/main/Projects/pith)
-
-#### Build & Flash
-```
-cd firmware
-make          # build (elf/bin), build/ 아래 산출물 생성
-make flash    # scripts/flash.ps1로 DAPLink 드라이브에 복사 (ST-Link 연결 필요)
-make clean    # build/ 정리
-```
-<br>
