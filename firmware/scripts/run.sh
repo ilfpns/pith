@@ -20,7 +20,6 @@ if [ "${1:-}" = "clean" ]; then
     echo "cleaned $BUILD/"
     exit 0
 fi
-
 mkdir -p "$BUILD"
 
 $CC $CFLAGS -c src/main/main.c -o "$BUILD/main.o"
@@ -30,11 +29,14 @@ $CC $CFLAGS -c src/gpio/afio_setting.c -o "$BUILD/afio_setting.o"
 $CC $CFLAGS -c src/system/systick/systick.c -o "$BUILD/systick.o"
 $CC $CFLAGS -c src/system/task/task.c -o "$BUILD/task.o"
 $CC $CFLAGS -c src/system/task/task_func.c -o "$BUILD/task_func.o"
+$CC $CFLAGS -c src/system/handler/exception_handler.c -o "$BUILD/exception_handler.o"
+$CC $CFLAGS -c src/system/scheduler/rr.c -o "$BUILD/rr.o"
+$CC $CFLAGS -c src/system/mutex/mutex.c -o "$BUILD/mutex.o"
 $CC $CFLAGS -c startup/system_stm32f1xx.c -o "$BUILD/system_stm32f1xx.o"
 $CC $ASFLAGS -c startup/startup_stm32f103xb.s -o "$BUILD/startup_stm32f103xb.o"
 
 $CC $LDFLAGS -o "$BUILD/$TARGET.elf" \
-    "$BUILD/main.o" "$BUILD/syscalls.o" "$BUILD/clock_setting.o" "$BUILD/afio_setting.o" "$BUILD/systick.o" "$BUILD/task.o" "$BUILD/task_func.o" "$BUILD/system_stm32f1xx.o" "$BUILD/startup_stm32f103xb.o"
+    "$BUILD/main.o" "$BUILD/syscalls.o" "$BUILD/clock_setting.o" "$BUILD/afio_setting.o" "$BUILD/systick.o" "$BUILD/task.o" "$BUILD/task_func.o" "$BUILD/exception_handler.o" "$BUILD/rr.o" "$BUILD/mutex.o" "$BUILD/system_stm32f1xx.o" "$BUILD/startup_stm32f103xb.o"
 
 $OBJCOPY -O binary "$BUILD/$TARGET.elf" "$BUILD/$TARGET.bin"
 

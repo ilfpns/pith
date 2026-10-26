@@ -2,7 +2,10 @@
 # Without this, make picks whichever sh.exe it finds first on PATH (e.g. Git
 # Bash's), which breaks the "if exist ... mkdir/rmdir" batch syntax below —
 # that's why `make clean` worked from PowerShell but failed from Git Bash.
+# Only on Windows — macOS/Linux use the default /bin/sh.
+ifeq ($(OS),Windows_NT)
 SHELL   = cmd.exe
+endif
 
 TARGET  = pith
 
@@ -57,8 +60,17 @@ $(BUILD)/$(TARGET).elf: $(OBJS) linker/stm32f103xb.ld
 $(BUILD)/$(TARGET).bin: $(BUILD)/$(TARGET).elf
 	$(OBJCOPY) -O binary $< $@
 
+# Copies the .bin onto the Nucleo's ST-Link mass-storage drive
+# (NOD_*/NODE_* on Nucleo, DIS_* on Discovery, MBED on older firmware).
 flash: $(BUILD)/$(TARGET).bin
+ifeq ($(OS),Windows_NT)
 	powershell -NoProfile -ExecutionPolicy Bypass -File scripts/flash.ps1 -BinPath "$(BUILD)/$(TARGET).bin"
+else
+	@vol=$$(ls -d /Volumes/NOD_* /Volumes/NODE_* /Volumes/DIS_* /Volumes/MBED /media/$$USER/NOD_* /media/$$USER/NODE_* 2>/dev/null | head -n 1); \
+	if [ -z "$$vol" ]; then echo "ST-Link mass-storage drive not found. Connect the board via the ST-Link USB port and try again."; exit 1; fi; \
+	echo "Flashing $< -> $$vol"; \
+	cp "$<" "$$vol/" && sync && echo "Done. Board resets automatically after the copy completes."
+endif
 
 clean:
 	@$(call RMDIR,$(BUILD))
