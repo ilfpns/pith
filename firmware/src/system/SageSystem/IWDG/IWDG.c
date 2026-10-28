@@ -3,6 +3,21 @@
 static uint32_t volatile wdg_flag;
 static uint8_t volatile wdg_fail;
 
+void iwdg_init(void) {
+    IWDG->KR = 0x5555;
+    IWDG->PR = 4;
+    IWDG->RLR = 625;
+
+    if (IWDG->SR == 0) {
+        IWDG->KR = 0xAAAA;
+        IWDG->KR = 0xCCCC;
+    }
+    else {
+        usart2_send_string("Not arrive first IWDG signal");
+        return;
+    }
+}
+
 uint8_t wdg_report_alive(uint8_t id) {
     if (WDG_ID_COUNT < id) {
         char buf[32];

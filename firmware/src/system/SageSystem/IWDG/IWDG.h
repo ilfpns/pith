@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include "cmsis_gcc.h"
 #include "../../../clock/clock_setting.h"
 
 enum {
