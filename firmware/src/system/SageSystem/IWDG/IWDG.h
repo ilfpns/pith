@@ -21,7 +21,7 @@ enum {
  *  - 1 : Error
  *  - 0 : Success
  */
-uint8_t iwdg_init(void);
+uint8_t init_iwdg(void);
 
 /**
  * @brief Check the id flag
