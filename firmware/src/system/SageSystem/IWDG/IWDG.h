@@ -15,6 +15,15 @@ enum {
 #define WDG_ALL ((1u << WDG_ID_COUNT) - 1u)
 
 /**
+ * @brief init iwdg system
+ * @param None
+ * @return
+ *  - 1 : Error
+ *  - 0 : Success
+ */
+uint8_t iwdg_init(void);
+
+/**
  * @brief Check the id flag
  * @param id
  * @return
