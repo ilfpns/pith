@@ -1,4 +1,5 @@
 #include "rr.h"
+#include "../task/task.h"
 
 void round_robin_init(void) {
     uint8_t current_idx = current_task - tcb_pool;

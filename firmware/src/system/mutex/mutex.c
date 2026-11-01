@@ -1,4 +1,5 @@
 #include "mutex.h"
+#include "../../clock/clock_setting.h"
 #include <sys/cdefs.h>
 
 void mutex_lock(mutex_lock_t *key) {
@@ -13,7 +14,7 @@ void mutex_lock(mutex_lock_t *key) {
         __enable_irq();
 
         char buf[32];
-        snprintf(buf, sizeof(buf), "Mutex owner: %s", key->owner->task_name);
+        snprintf(buf, sizeof(buf), "Mutex owner: %s\n", key->owner->task_name);
         usart2_send_string(buf);
     }
 
@@ -28,7 +29,7 @@ void mutex_unlock(mutex_lock_t *key) {
 
     if (!(prev_owner == NULL)) {
         char buf[32];
-        snprintf(buf, sizeof(buf), "Mutex owner: %s", prev_owner->task_name);
+        snprintf(buf, sizeof(buf), "Mutex owner: %s\n", prev_owner->task_name);
         usart2_send_string(buf);
     }
     __enable_irq();

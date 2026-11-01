@@ -1,4 +1,8 @@
 #include "task.h"
+#include "../../gpio/afio_setting.h"
+#include "../../clock/clock_setting.h"
+#include "../../system/systick/systick.h"
+#include "../../system/SafeSystem/IWDG/IWDG.h"
 #include <stdint.h>
 
 TCB_t tcb_pool[MAX_TASK_COUNT];
@@ -38,14 +42,20 @@ uint32_t is_stack_ok(TCB_t *tcb) {
 
 uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, void (*stack_entry)(void)) {
     if (current_free_slot >= MAX_TASK_COUNT) {
-        printf("Can't create new task \n : Max task limit (%d)\n", MAX_TASK_COUNT);
+        char buf[64];
+        snprintf(buf, sizeof(buf), "Can't create new task \n : Max task limit (%d)\n", MAX_TASK_COUNT);
+        usart2_send_string(buf);
         return 1;
     }
     if (priority > 10) {
-        printf("Can't create priority : (%d), smaller than 10", priority);
+        char buf[64];
+        snprintf(buf, sizeof(buf), "Can't create priority : (%d), smaller than 10\n", priority);
+        usart2_send_string(buf);
         return 1;
     }
 
+    uint32_t save_register = __get_PRIMASK();
+    __disable_irq();
     TCB_t *tcb = &tcb_pool[current_free_slot];
     tcb->task_name = task_name;
     tcb->priority = priority;
@@ -58,7 +68,8 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 
     uint32_t *stack_mem = (uint32_t *)malloc(sizeof(uint32_t) * stack_size);
     if (stack_mem == NULL) {
-        printf("Can't get a new stack mem\n");
+        __set_PRIMASK(save_register);
+        usart2_send_string("Can't get a new stack mem\n");
         return 1;
     }
     tcb->stack_mem = stack_mem;
@@ -69,9 +80,11 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     tcb->state = TASK_READY;
 
     if (tcb->sp == NULL) {
-        printf("staack init failed");
+        __set_PRIMASK(save_register);
+        usart2_send_string("staack init failed\n");
         return 1;
     }
+    __set_PRIMASK(save_register);
 
     return 2;
 }

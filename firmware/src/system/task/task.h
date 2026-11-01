@@ -1,3 +1,6 @@
+#ifndef TASK_HEADER
+#define TASK_HEADER
+
 #include "stm32f103xb.h"
 #include "stm32f1xx.h"
 #include "cmsis_gcc.h"
@@ -6,11 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../../gpio/afio_setting.h"
-#include "../../clock/clock_setting.h"
-
-#ifndef TASK_HEADER
-#define TASK_HEADER
 
 #define STACK_SIZE     256
 #define MAX_TASK_COUNT 10

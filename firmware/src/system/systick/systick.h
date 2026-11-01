@@ -1,8 +1,6 @@
 #include "stm32f103xb.h"
 #include "stm32f1xx.h"
 
-#include "../scheduler/rr.h"
-#include "../task/task.h"
 
 #include <stdint.h>
 #include <time.h>

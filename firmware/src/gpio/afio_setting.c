@@ -1,4 +1,5 @@
 #include "afio_setting.h"
+#include "../clock/clock_setting.h"
 #include "../system/mutex/mutex.h"
 
 mutex_lock_t mutex;
@@ -27,7 +28,7 @@ void EXTI15_10_IRQHandler() {
             unbutton_count++;
 
             char buf[32];
-            snprintf(buf, sizeof(buf), "Button unpressed: %u\r\n", unbutton_count);
+            snprintf(buf, sizeof(buf), "Button unpressed: %lu\r\n", unbutton_count);
             usart2_send_string(buf);
 
             mutex_unlock(&mutex);
@@ -37,7 +38,7 @@ void EXTI15_10_IRQHandler() {
             button_count++;
 
             char buf[32];
-            snprintf(buf, sizeof(buf), "Button pressed: %u\r\n", button_count);
+            snprintf(buf, sizeof(buf), "Button pressed: %lu\r\n", button_count);
             usart2_send_string(buf);
 
             mutex_unlock(&mutex);

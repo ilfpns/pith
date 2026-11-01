@@ -1,7 +1,6 @@
 #include "stm32f1xx.h"
 #include "stm32f103xb.h"
 
-#include "../clock/clock_setting.h"
 
 #include <stdio.h>
 

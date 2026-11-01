@@ -1,4 +1,5 @@
 #include "exception_handler.h"
+#include "../task/task.h"
 
 void __attribute__((naked)) SVC_Handler() {
     __asm volatile (
