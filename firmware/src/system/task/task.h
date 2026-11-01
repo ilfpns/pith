@@ -1,3 +1,6 @@
+#ifndef TASK_HEADER
+#define TASK_HEADER
+
 #include "stm32f103xb.h"
 #include "stm32f1xx.h"
 #include "cmsis_gcc.h"
@@ -8,9 +11,8 @@
 
 #include "../../gpio/afio_setting.h"
 #include "../../clock/clock_setting.h"
-
-#ifndef TASK_HEADER
-#define TASK_HEADER
+#include "../../system/systick/systick.h"
+#include "../../system/SageSystem/IWDG/IWDG.h"
 
 #define STACK_SIZE     256
 #define MAX_TASK_COUNT 10

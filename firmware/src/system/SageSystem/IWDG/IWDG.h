@@ -7,9 +7,8 @@
 #include "../../../clock/clock_setting.h"
 
 enum {
-    WDG_ID_SENSOR,
-    WDG_ID_COMM,
-    WDG_ID_CTRL,
+    WDG_ID_TASK1,
+    WDG_ID_TASK2,
     WDG_ID_COUNT,
 };
 #define WDG_ALL ((1u << WDG_ID_COUNT) - 1u)
