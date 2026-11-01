@@ -54,6 +54,8 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
         return 1;
     }
 
+    uint32_t save_register = __get_PRIMASK();
+    __disable_irq();
     TCB_t *tcb = &tcb_pool[current_free_slot];
     tcb->task_name = task_name;
     tcb->priority = priority;
@@ -66,6 +68,7 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 
     uint32_t *stack_mem = (uint32_t *)malloc(sizeof(uint32_t) * stack_size);
     if (stack_mem == NULL) {
+        __set_PRIMASK(save_register);
         usart2_send_string("Can't get a new stack mem\n");
         return 1;
     }
@@ -77,9 +80,11 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     tcb->state = TASK_READY;
 
     if (tcb->sp == NULL) {
+        __set_PRIMASK(save_register);
         usart2_send_string("staack init failed\n");
         return 1;
     }
+    __set_PRIMASK(save_register);
 
     return 2;
 }

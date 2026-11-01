@@ -1,15 +1,20 @@
 #include "IWDG.h"
+
+#include "../../task/task.h"
 #include "../../../clock/clock_setting.h"
 
 #define KEY_UNLOCK_IWDG        0x5555
 #define KEY_START_IWDG         0xCCCC
 #define KEY_KICK_IWDG          0xAAAA
 /* prescaler 4 : divide by 64, reload 625 : about 1 second at 40kHz LSI */
+
 #define PRESCALER_DIV64_IWDG   4
 #define RELOAD_IWDG            625
 #define TIMEOUT_COUNT_IWDG     100000
+#define STANDARD_LINE_IWDG     350
+// Supervisor's IWDG deadline
 
-static uint32_t volatile flag_iwdg;
+static uint32_t last_tick_iwdg[ID_COUNT_IWDG];
 
 uint8_t init_iwdg(void) {
     IWDG->KR = KEY_UNLOCK_IWDG;
@@ -36,24 +41,16 @@ uint8_t report_alive_iwdg(uint8_t id) {
         usart2_send_string(buf);
         return 1;
     }
-    uint32_t save_register = __get_PRIMASK();
-    __disable_irq();
-    flag_iwdg |= (1U << id);
-    __set_PRIMASK(save_register);
+    last_tick_iwdg[id] = Os_Ticks;
 
     return 0;
 }
 
 void supervisor_iwdg(void) {
-    uint32_t flags;
-    uint32_t save_register = __get_PRIMASK();
-
-    __disable_irq();
-    flags = flag_iwdg;
-    flag_iwdg = 0;
-    __set_PRIMASK(save_register);
-
-    if (flags == ALL_IWDG) {
-        IWDG->KR = KEY_KICK_IWDG;
+    for (int i = 0; i < ID_COUNT_IWDG; i++) {
+        if ((Os_Ticks - last_tick_iwdg[i]) > STANDARD_LINE_IWDG) {
+            return;
+        }
     }
+    IWDG->KR = KEY_KICK_IWDG;
 }

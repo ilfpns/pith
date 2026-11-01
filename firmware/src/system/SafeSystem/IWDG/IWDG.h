@@ -10,7 +10,6 @@ enum {
     ID_TASK2_IWDG,
     ID_COUNT_IWDG,
 };
-#define ALL_IWDG ((1u << ID_COUNT_IWDG) - 1u)
 
 /**
  * @brief init iwdg system

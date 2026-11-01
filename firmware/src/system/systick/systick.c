@@ -22,9 +22,13 @@ void SysTick_Handler() {
 }
 
 void task_delay(uint32_t delay_time) {
+    uint32_t save_register = __get_PRIMASK();
+
+    __disable_irq();
     current_task->state = TASK_BLOCK;
     current_task->wake_ticks = Os_Ticks + delay_time;
     round_robin_init();
 
     SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+    __set_PRIMASK(save_register);
 }
