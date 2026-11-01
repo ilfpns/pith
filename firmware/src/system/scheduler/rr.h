@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../task/task.h"
 
 #ifndef RR_SETTING
 #define RR_SETTING

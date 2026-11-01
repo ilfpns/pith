@@ -4,14 +4,13 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "cmsis_gcc.h"
-#include "../../../clock/clock_setting.h"
 
 enum {
-    WDG_ID_TASK1,
-    WDG_ID_TASK2,
-    WDG_ID_COUNT,
+    ID_TASK1_IWDG,
+    ID_TASK2_IWDG,
+    ID_COUNT_IWDG,
 };
-#define WDG_ALL ((1u << WDG_ID_COUNT) - 1u)
+#define ALL_IWDG ((1u << ID_COUNT_IWDG) - 1u)
 
 /**
  * @brief init iwdg system
@@ -29,13 +28,13 @@ uint8_t init_iwdg(void);
  *  - 1 : Error
  *  - 0 : Success
  */
-uint8_t wdg_report_alive(uint8_t id);
+uint8_t report_alive_iwdg(uint8_t id);
 
 /**
  * @brief Check the flag error
  * @param None
  * @return None
  */
-void wdg_supervisor(void);
+void supervisor_iwdg(void);
 
 #endif //PITH_IWDG_H

@@ -1,16 +1,17 @@
-#include "stm32f103xb.h"
-#include "stm32f1xx.h"
-#include "cmsis_gcc.h"
-
-#include "../task/task.h"
-#include "../../clock/clock_setting.h"
-
-
 #include <stdint.h>
 #include <stdio.h>
 
+
 #ifndef MUTEX_SETTING
 #define MUTEX_SETTING
+
+#include "stm32f103xb.h"
+#include "stm32f1xx.h"
+#include "cmsis_gcc.h"
+#include "../task/task.h"
+
+#include <stdint.h>
+#include <stdio.h>
 
 typedef struct {
     volatile TCB_t *owner;

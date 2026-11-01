@@ -1,4 +1,6 @@
 #include "systick.h"
+#include "../scheduler/rr.h"
+#include "../task/task.h"
 
 volatile uint32_t Os_Ticks;
 

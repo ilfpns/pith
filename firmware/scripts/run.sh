@@ -32,7 +32,7 @@ $CC $CFLAGS -c src/system/task/task_func.c -o "$BUILD/task_func.o"
 $CC $CFLAGS -c src/system/handler/exception_handler.c -o "$BUILD/exception_handler.o"
 $CC $CFLAGS -c src/system/scheduler/rr.c -o "$BUILD/rr.o"
 $CC $CFLAGS -c src/system/mutex/mutex.c -o "$BUILD/mutex.o"
-$CC $CFLAGS -c src/system/SageSystem/IWDG/IWDG.c -o "$BUILD/IWDG.o"
+$CC $CFLAGS -c src/system/SafeSystem/IWDG/IWDG.c -o "$BUILD/IWDG.o"
 $CC $CFLAGS -c startup/system_stm32f1xx.c -o "$BUILD/system_stm32f1xx.o"
 $CC $ASFLAGS -c startup/startup_stm32f103xb.s -o "$BUILD/startup_stm32f103xb.o"
 

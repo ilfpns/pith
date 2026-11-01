@@ -6,7 +6,7 @@
 #include "../gpio/afio_setting.h"
 #include "../system/systick/systick.h"
 #include "../system/task/task.h"
-#include "../system/SageSystem/IWDG/IWDG.h"
+#include "../system/SafeSystem/IWDG/IWDG.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -29,16 +29,16 @@ int main(void) {
     uint8_t err_state;
     err_state = create_new_task("Task1", 5, 256, task1);
     if (err_state == 1) {
-        printf("Error create new task1");
+        usart2_send_string("Error create new task1\n");
     }
 
-    err_state = create_new_task("Task2", 5, 513, task2);
+    err_state = create_new_task("Task2", 5, 512, task2);
     if (err_state == 1) {
-        printf("Error create new task2");
+        usart2_send_string("Error create new task2\n");
     }
     uint8_t err = init_iwdg();
     if (err == 1) {
-        usart2_send_string("Error initiating IWDG");
+        usart2_send_string("Error initiating IWDG\n");
         while (1) {
             // 인터럽트 분석 후 다시 재구동 코드
         }
