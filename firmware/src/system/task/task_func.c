@@ -28,7 +28,7 @@ void task3 (void) {
             usart2_send_string("\n");
         }
         task_delay(200);
-        report_alive_iwdg(ID_TASK2_IWDG);
+        report_alive_iwdg(ID_TASK3_IWDG);
         supervisor_iwdg();
     }
 }

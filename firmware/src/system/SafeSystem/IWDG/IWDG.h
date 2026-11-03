@@ -8,6 +8,7 @@
 enum {
     ID_TASK1_IWDG,
     ID_TASK2_IWDG,
+    ID_TASK3_IWDG,
     ID_COUNT_IWDG,
 };
 

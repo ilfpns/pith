@@ -81,7 +81,7 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 
     if (tcb->sp == NULL) {
         __set_PRIMASK(save_register);
-        usart2_send_string("staack init failed\n");
+        usart2_send_string("stack init failed\n");
         return 1;
     }
     __set_PRIMASK(save_register);
