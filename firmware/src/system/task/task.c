@@ -3,6 +3,7 @@
 #include "../../clock/clock_setting.h"
 #include "../../system/systick/systick.h"
 #include "../../system/SafeSystem/IWDG/IWDG.h"
+#include "../uart/uart.h"
 #include <stdint.h>
 
 TCB_t tcb_pool[MAX_TASK_COUNT];

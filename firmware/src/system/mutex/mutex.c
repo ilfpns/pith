@@ -1,5 +1,6 @@
 #include "mutex.h"
 #include "../../clock/clock_setting.h"
+#include "../uart/uart.h"
 #include <sys/cdefs.h>
 
 void mutex_lock(mutex_lock_t *key) {

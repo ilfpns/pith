@@ -1,6 +1,7 @@
 #include "afio_setting.h"
 #include "../clock/clock_setting.h"
 #include "../system/mutex/mutex.h"
+#include "../system/uart/uart.h"
 
 mutex_lock_t mutex;
 

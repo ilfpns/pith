@@ -7,6 +7,7 @@
 #include "../system/systick/systick.h"
 #include "../system/task/task.h"
 #include "../system/SafeSystem/IWDG/IWDG.h"
+#include "../system/uart/uart.h"
 
 #include <math.h>
 #include <stdint.h>

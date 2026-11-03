@@ -2,6 +2,7 @@
 
 #include "../../task/task.h"
 #include "../../../clock/clock_setting.h"
+#include "../../uart/uart.h"
 
 #define KEY_UNLOCK_IWDG        0x5555
 #define KEY_START_IWDG         0xCCCC
