@@ -9,8 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-#define STACK_SIZE     256
 #define MAX_TASK_COUNT 10
 #define STACK_CANARY 0xDEADBEEF
 
@@ -64,9 +62,9 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
  */
 uint32_t is_stack_ok(TCB_t *tcb);
 
-// task function prototype
 /**
  * @brief demo task 1
+ *        Turn the LED on, wait 200ms and report alive to IWDG
  * @retval None
  * @param  None
  */
@@ -74,9 +72,18 @@ void task1(void);
 
 /**
  * @brief demo task 2
+ *        Turn the LED off, wait 200ms, report alive to IWDG and run the IWDG supervisor
  * @retval None
  * @param  None
  */
 void task2(void);
+
+/**
+ * @brief demo task 3
+ *        Read one line from the usart2 ring buffer and echo it back, every 300ms
+ * @retval None
+ * @param  None
+ */
+void task3(void);
 
 #endif

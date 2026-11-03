@@ -15,6 +15,8 @@
 #define USART_CR1_TE         (1UL << 3)
 #define USART_SR_TXE         (1UL << 7)
 
+#define UART_RX_LINE_SIZE    64
+
 /**
  * @brief initialize usart2
  * @retval None
@@ -35,5 +37,24 @@ void usart2_send_char(char message);
  * @param  const char *message
  */
 void usart2_send_string(const char *message);
+
+/**
+ * @brief usart2 receive interrupt handler
+ * @retval None
+ * @param  None
+ */
+void USART2_IRQHandler(void);
+
+/**
+ * @brief receive one character over usart2
+ * @param  char *message
+ */
+uint8_t usart2_receive_char(char *message);
+
+/**
+ * @brief receive one line over usart2
+ * @param  char *buffer, uint32_t size
+ */
+uint8_t usart2_receive_string(char *buffer, uint32_t size);
 
 #endif

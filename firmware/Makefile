@@ -35,7 +35,10 @@ OBJS    = $(SRCS_C:%.c=$(BUILD)/%.o) $(SRCS_S:%.s=$(BUILD)/%.o)
 
 .PHONY: all clean flash
 
-all: $(BUILD)/$(TARGET).bin
+# `make` removes the build folder first, then rebuilds everything
+all:
+	@$(call RMDIR,$(BUILD))
+	@$(MAKE) $(BUILD)/$(TARGET).bin
 
 ifeq ($(OS),Windows_NT)
 MKDIR = if not exist "$(subst /,\,$(1))" mkdir "$(subst /,\,$(1))"
