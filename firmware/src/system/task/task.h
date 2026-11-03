@@ -80,7 +80,7 @@ void task2(void);
 
 /**
  * @brief demo task 3
- *        Read one line from the usart2 ring buffer and echo it back, every 300ms
+ *        Read one line from the usart2 ring buffer and echo it back, every 200ms
  * @retval None
  * @param  None
  */

@@ -65,30 +65,30 @@ uint8_t usart2_receive_string(char *buffer, uint32_t size) {
     }
 
     while (usart2_receive_char(&ch)) {
-        if (ch == '\n' || ch == '\r') {
-            if (length == 0) {
-                continue;
-            }
+        uint8_t is_end = (ch == '\n' || ch == '\r');
 
-            uint32_t i = 0;
-            while (i < length && i < size - 1) {
-                buffer[i] = line[i];
-                i++;
-            }
-            if (i == length) {
-                usart2_send_string("Read everything before reaching size\n");
-            }
-            else {
-                usart2_send_string("Size is too small to read the whole line\n");
-            }
-            buffer[i] = '\0';
-            length = 0;
-            return 1;
+        if (is_end && length == 0) {
+            continue;
+        }
+        if (!is_end && length < UART_RX_LINE_SIZE - 1) {
+            line[length++] = ch;
+            continue;
         }
 
-        if (length < UART_RX_LINE_SIZE - 1) {
+        uint32_t i = 0;
+        while (i < length && i < size - 1) {
+            buffer[i] = line[i];
+            i++;
+        }
+        if (i < length) {
+            usart2_send_string("Size is too small to read the whole line\n");
+        }
+        buffer[i] = '\0';
+        length = 0;
+        if (!is_end) {
             line[length++] = ch;
         }
+        return 1;
     }
 
     return 0;
