@@ -3,7 +3,7 @@
 #include "../../clock/clock_setting.h"
 #include "../../system/systick/systick.h"
 #include "../../system/SafeSystem/IWDG/IWDG.h"
-#include <stdint.h>
+#include "../uart/uart.h"
 
 TCB_t tcb_pool[MAX_TASK_COUNT];
 uint32_t stack_mem_addr[MAX_TASK_COUNT];
@@ -68,6 +68,11 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
 
     uint32_t *stack_mem = (uint32_t *)malloc(sizeof(uint32_t) * stack_size);
     if (stack_mem == NULL) {
+        task_count--;
+        current_free_slot--;
+        if (current_free_slot == 0) {
+            current_task = NULL;
+        }
         __set_PRIMASK(save_register);
         usart2_send_string("Can't get a new stack mem\n");
         return 1;
@@ -78,12 +83,6 @@ uint8_t create_new_task(char *task_name, uint8_t priority, uint32_t stack_size, 
     uint32_t *stack_top = stack_mem + stack_size;
     tcb->sp = stack_init(stack_top, stack_entry);
     tcb->state = TASK_READY;
-
-    if (tcb->sp == NULL) {
-        __set_PRIMASK(save_register);
-        usart2_send_string("staack init failed\n");
-        return 1;
-    }
     __set_PRIMASK(save_register);
 
     return 2;

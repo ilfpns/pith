@@ -2,11 +2,11 @@
 
 #include "../../task/task.h"
 #include "../../../clock/clock_setting.h"
+#include "../../uart/uart.h"
 
 #define KEY_UNLOCK_IWDG        0x5555
 #define KEY_START_IWDG         0xCCCC
 #define KEY_KICK_IWDG          0xAAAA
-/* prescaler 4 : divide by 64, reload 625 : about 1 second at 40kHz LSI */
 
 #define PRESCALER_DIV64_IWDG   4
 #define RELOAD_IWDG            625

@@ -1,6 +1,7 @@
 #include "task.h"
 #include "../systick/systick.h"
 #include "../SafeSystem/IWDG/IWDG.h"
+#include "../uart/uart.h"
 
 void task1 (void) {
     for (;;) {
@@ -15,6 +16,25 @@ void task2 (void) {
         GPIOA->BSRR = GPIO_BSRR_BR5;
         task_delay(200);
         report_alive_iwdg(ID_TASK2_IWDG);
+    }
+}
+
+void task3 (void) {
+    char message[UART_RX_LINE_SIZE] = {0};
+
+    for (;;) {
+        if (usart2_receive_string(message, sizeof(message))) {
+            usart2_send_string(message);
+            usart2_send_string("\n");
+        }
+        task_delay(200);
+        report_alive_iwdg(ID_TASK3_IWDG);
         supervisor_iwdg();
+    }
+}
+
+void idle_task (void) {
+    for (;;) {
+        __WFI();
     }
 }

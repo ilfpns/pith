@@ -34,11 +34,6 @@
 #undef GPIO_CRL_CNF3_0
 #undef GPIO_CRL_MODE3
 
-#undef RCC_APB1ENR_USART2EN
-#undef USART_CR1_UE
-#undef USART_CR1_TE
-#undef USART_SR_TXE
-
 // Pin Clock
 #define GPIO_CRL_CNF5      (0x3UL << 22)
 #define GPIO_CRL_MODE5     (0x3UL << 20)
@@ -64,11 +59,6 @@
 #define RCC_APB2ENR_IOPAEN (1UL << 2)
 #define RCC_APB2ENR_IOPCEN (1UL << 4)
 
-#define RCC_APB1ENR_USART2EN (0x1UL << 17)
-#define USART_CR1_UE         (1UL << 13)
-#define USART_CR1_TE         (1UL << 3)
-#define USART_SR_TXE         (1UL << 7)
-
 // Bsrr configuration
 #define GPIO_BSRR_BS5      (1UL << 5)
 #define GPIO_BSRR_BR5      (1UL << 21)
@@ -90,26 +80,5 @@ void set_the_gpio_regi();
  * @param  None
  */
 void set_the_hsi_clock();
-
-/**
- * @brief initialize usart2
- * @retval None
- * @param  None
- */
-void set_the_usart2();
-
-/**
- * @brief send one character over usart2
- * @retval None
- * @param  char message
- */
-void usart2_send_char(char message);
-
-/**
- * @brief send a string over usart2
- * @retval None
- * @param  const char *message
- */
-void usart2_send_string(const char *message);
 
 #endif

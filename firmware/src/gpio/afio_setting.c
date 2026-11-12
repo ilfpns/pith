@@ -1,6 +1,7 @@
 #include "afio_setting.h"
 #include "../clock/clock_setting.h"
 #include "../system/mutex/mutex.h"
+#include "../system/uart/uart.h"
 
 mutex_lock_t mutex;
 
@@ -15,6 +16,7 @@ void set_the_exti() {
     EXTI->FTSR |= EXTI_LINE13;
     EXTI->RTSR |= EXTI_LINE13;
 
+    NVIC_SetPriority(EXTI15_10_IRQn, 1);
     NVIC->ISER[EXTI15_10_IRQn >> 5] = (1UL << (EXTI15_10_IRQn & 0x1F));
 
     return;

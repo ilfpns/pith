@@ -10,9 +10,9 @@ CompileFlags:
     - -std=gnu11
 
     # PATH
-    - -ID:/pith/pith/firmware/inc
-    - -IC:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/lib/gcc/arm-none-eabi/14.2.1/include
-    - -IC:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/arm-none-eabi/include
+    - -I/Users/sehyeon/Develops/Clion_Projects/PITH/firmware/inc
+    - -I/Applications/ArmGNUToolchain/15.3.rel2/arm-none-eabi/lib/gcc/arm-none-eabi/15.3.1/include
+    - -I/Applications/ArmGNUToolchain/15.3.rel2/arm-none-eabi/arm-none-eabi/include
   Compiler: arm-none-eabi-gcc
 
 Diagnostics:
