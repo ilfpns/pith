@@ -32,12 +32,13 @@ void mutex_unlock(mutex_lock_t *key) {
     volatile TCB_t *prev_owner = key->owner;
     key->owner = NULL;
 
+    __set_PRIMASK(save_register);
+
     if (!(prev_owner == NULL)) {
         char buf[32];
         snprintf(buf, sizeof(buf), "Mutex owner: %s\n", prev_owner->task_name);
         usart2_send_string(buf);
     }
-    __set_PRIMASK(save_register);
 
     return;
 }

@@ -14,6 +14,7 @@ void set_the_usart2() {
 
     USART2->CR1 |= USART_CR1_UE | USART_CR1_TE | USART_CR1_RE;
     USART2->CR1 |= USART_CR1_RXNEIE;
+    NVIC_SetPriority(USART2_IRQn, 0);
     NVIC_EnableIRQ(USART2_IRQn);
     return;
 }

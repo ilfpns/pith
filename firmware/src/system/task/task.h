@@ -86,4 +86,12 @@ void task2(void);
  */
 void task3(void);
 
+/**
+ * @brief idle task
+ *        Sleep until the next interrupt, runs only when no other task is ready
+ * @retval None
+ * @param  None
+ */
+void idle_task(void);
+
 #endif

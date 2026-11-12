@@ -33,4 +33,8 @@ void task3 (void) {
     }
 }
 
-// 출력하는 함수
+void idle_task (void) {
+    for (;;) {
+        __WFI();
+    }
+}

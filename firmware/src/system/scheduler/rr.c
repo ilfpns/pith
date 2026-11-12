@@ -2,7 +2,7 @@
 #include "../task/task.h"
 
 void round_robin_init(void) {
-    uint8_t current_idx = current_task - tcb_pool;
+    int8_t current_idx = current_task - tcb_pool;
 
     if ((tcb_pool[current_idx].state) == TASK_RUNNING) {
         if ((is_stack_ok(current_task))) {
