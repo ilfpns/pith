@@ -43,3 +43,8 @@ void set_the_hsi_clock() {
 
     return;
 }
+
+void set_the_bkp_regi() {
+    RCC->APB1ENR |= RCC_APB1ENR_PWREN | RCC_APB1ENR_BKPEN;
+    PWR->CR |= PWR_CR_DBP;
+}

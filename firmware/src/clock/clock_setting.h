@@ -81,4 +81,6 @@ void set_the_gpio_regi();
  */
 void set_the_hsi_clock();
 
+void set_the_bkp_regi();
+
 #endif

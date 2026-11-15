@@ -38,6 +38,7 @@ void USART2_IRQHandler(void) {
 
     if (status & (USART_SR_RXNE | USART_SR_ORE)) {
         uint8_t data = (uint8_t)USART2->DR;
+        usart2_send_char(data); /* DEBUG-RX */
         uint32_t next = (rx_head + 1U) & UART_RX_RING_MASK;
 
         if (next != rx_tail) {
