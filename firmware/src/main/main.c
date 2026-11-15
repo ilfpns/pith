@@ -8,6 +8,7 @@
 #include "../system/task/task.h"
 #include "../system/SafeSystem/IWDG/IWDG.h"
 #include "../system/uart/uart.h"
+#include "../system/SafeSystem/BKP/bkp.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -19,6 +20,7 @@ int main(void) {
     set_the_gpio_regi();
     set_the_exti();
     set_the_bkp_regi();
+    fault_report();
     if (RCC->CSR & RCC_CSR_IWDGRSTF) {
         usart2_send_string("Reset by IWDG\n");
     }

@@ -13,4 +13,6 @@
  */
 void __attribute__((naked)) SVC_Handler();
 
+void __attribute__((naked)) HardFault_Handler(void);
+
 #endif

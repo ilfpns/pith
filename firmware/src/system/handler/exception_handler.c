@@ -37,3 +37,13 @@ void __attribute__((naked)) PendSV_Handler(void) {
         "bx lr                   \n"
     );
 }
+
+void __attribute__((naked)) HardFault_Handler(void) {
+    __asm volatile (
+        "tst lr, #4              \n"
+        "ite eq                  \n"
+        "mrseq r0, msp           \n"
+        "mrsne r0, psp           \n"
+        "b hardfault_c           \n"
+    );
+}
