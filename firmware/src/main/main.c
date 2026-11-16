@@ -20,6 +20,7 @@ int main(void) {
     set_the_gpio_regi();
     set_the_exti();
     set_the_bkp_regi();
+    usart2_send_string("PITH boot: build " __DATE__ " " __TIME__ "\n");
     fault_report();
     if (RCC->CSR & RCC_CSR_IWDGRSTF) {
         usart2_send_string("Reset by IWDG\n");
