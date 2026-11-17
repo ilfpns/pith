@@ -10,7 +10,7 @@
 #define BAD_ADDRESS     0x60000000UL
 
 static void flush_uart(void) {
-    while (!(USART2->SR & USART_SR_TC)) { }
+    usart2_flush();
 }
 
 static void fault_bad_write(void) {

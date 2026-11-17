@@ -57,7 +57,11 @@ int main(void) {
 
 
     if (create_failed) {
-        NVIC_SystemReset();
+        usart2_send_string("Task creation failed: halted\n");
+        usart2_flush();
+        while (1) {
+            // 리셋하면 같은 malloc 실패를 반복하므로 여기서 정지
+        }
     }
 
     uint8_t err = init_iwdg();

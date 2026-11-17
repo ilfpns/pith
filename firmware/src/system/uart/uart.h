@@ -39,6 +39,13 @@ void usart2_send_char(char message);
 void usart2_send_string(const char *message);
 
 /**
+ * @brief wait until every queued character has left the wire
+ * @retval None
+ * @param  None
+ */
+void usart2_flush(void);
+
+/**
  * @brief usart2 receive interrupt handler
  * @retval None
  * @param  None
