@@ -3,7 +3,7 @@
 #include "../system/mutex/mutex.h"
 #include "../system/uart/uart.h"
 
-mutex_lock_t mutex;
+mutex_lock_t mutex = MUTEX_INIT_IRQ(EXTI15_10_IRQn);
 
 static uint32_t button_count;
 static uint32_t unbutton_count;
@@ -29,7 +29,7 @@ void EXTI15_10_IRQHandler() {
             // This board is active-low
             unbutton_count++;
 
-            char buf[32];
+            char buf[64];
             snprintf(buf, sizeof(buf), "Button unpressed: %lu\r\n", unbutton_count);
             usart2_send_string(buf);
 
@@ -39,7 +39,7 @@ void EXTI15_10_IRQHandler() {
             mutex_lock(&mutex);
             button_count++;
 
-            char buf[32];
+            char buf[64];
             snprintf(buf, sizeof(buf), "Button pressed: %lu\r\n", button_count);
             usart2_send_string(buf);
 

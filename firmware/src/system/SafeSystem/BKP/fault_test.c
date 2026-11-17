@@ -95,10 +95,10 @@ void fault_test_run(const char *line) {
     case 5:
         fault_unaligned();
         break;
-    case 6:
+    case 7:
         fault_in_isr();
         break;
-    case 7:
+    case 8:
         plain_reset();
         break;
     default:

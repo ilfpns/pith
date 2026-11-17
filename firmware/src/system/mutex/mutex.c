@@ -11,12 +11,15 @@ void mutex_lock(mutex_lock_t *key) {
         if (!(key->lock)) {
             key->lock = 1;
             key->owner = current_task;
+            if (key->mask_irq && __get_IPSR() == 0) {
+                NVIC_DisableIRQ((IRQn_Type)key->irq);
+            }
             __set_PRIMASK(save_register);
             break;
         }
         __set_PRIMASK(save_register);
 
-        char buf[32];
+        char buf[64];
         snprintf(buf, sizeof(buf), "Mutex owner: %s\n", key->owner->task_name);
         usart2_send_string(buf);
     }
@@ -31,11 +34,14 @@ void mutex_unlock(mutex_lock_t *key) {
     key->lock = 0;
     volatile TCB_t *prev_owner = key->owner;
     key->owner = NULL;
+    if (key->mask_irq && __get_IPSR() == 0) {
+        NVIC_EnableIRQ((IRQn_Type)key->irq);
+    }
 
     __set_PRIMASK(save_register);
 
     if (!(prev_owner == NULL)) {
-        char buf[32];
+        char buf[64];
         snprintf(buf, sizeof(buf), "Mutex owner: %s\n", prev_owner->task_name);
         usart2_send_string(buf);
     }

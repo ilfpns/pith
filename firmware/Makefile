@@ -76,7 +76,7 @@ else
 	@vol=$$(ls -d /Volumes/NOD_* /Volumes/NODE_* /Volumes/DIS_* /Volumes/MBED /media/$$USER/NOD_* /media/$$USER/NODE_* 2>/dev/null | head -n 1); \
 	if [ -z "$$vol" ]; then echo "ST-Link mass-storage drive not found. Connect the board via the ST-Link USB port and try again."; exit 1; fi; \
 	echo "Flashing $< -> $$vol"; \
-	cp "$<" "$$vol/" && sync && echo "Done. Board resets automatically after the copy completes."
+	cp -X "$<" "$$vol/" && sync && echo "Done. Board resets automatically after the copy completes."
 endif
 
 clean:

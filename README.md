@@ -9,7 +9,7 @@ Zero to one Nucleo — HAL 없이 레지스터부터 만드는 STM32 베어메�
 - **GPIO/EXTI**: 버튼 인터럽트(EXTI15_10)로 UART 로그 트리거
 - **UART**: USART2 register-level 드라이버. TX는 폴링 방식(`usart2_send_char`/`usart2_send_string`)이며 `\n`은 `\r\n`으로 변환해 전송, RX는 RXNE 인터럽트 + 256 B 링 버퍼, 줄 단위 조립(`usart2_receive_string`). 수신한 줄은 `User input : ...`으로 되돌려 출력
 - **동기화**: PRIMASK(IRQ masking) 기반 spinlock mutex(`mutex_lock`/`mutex_unlock`)로 태스크·ISR이 공유하는 UART 송신 자원을 보호
-- **Watchdog**: IWDG(약 1 s). LSI를 켜고 IWDG를 시작한 뒤 PR/RLR을 설정하고 kick하는 순서로 초기화. 태스크별 alive 보고 후 supervisor가 모든 태스크가 500 ms 이내에 응답했을 때만 kick. 부팅 시 `RCC->CSR`로 IWDG 리셋 원인 확인
+- **Watchdog**: IWDG(약 1 s). IWDG를 시작한 뒤 PR/RLR을 설정하고 kick하는 순서로 초기화. 태스크별 alive 보고 후 supervisor가 모든 태스크가 500 ms 이내에 응답했을 때만 kick. 부팅 시 `RCC->CSR`로 IWDG 리셋 원인 확인
 - **HardFault 대응**: `HardFault_Handler`가 폴트 시점의 PC / LR / CFSR / `Os_Ticks` / 태스크 번호를 BKP 레지스터(DR1~DR10)에 저장하고 리셋, 다음 부팅의 `fault_report()`가 UART로 출력 후 지움. 보드에서 폴트 주입 테스트로 검증함(아래 "폴트 주입 테스트")
 - **부팅 가드**: 태스크 생성에 실패하면 `NVIC_SystemReset()`으로 재시작
 
