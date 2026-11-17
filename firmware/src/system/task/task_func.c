@@ -2,6 +2,7 @@
 #include "../systick/systick.h"
 #include "../SafeSystem/IWDG/IWDG.h"
 #include "../uart/uart.h"
+#include "../SafeSystem/BKP/fault_test.h"
 
 void task1 (void) {
     for (;;) {
@@ -28,6 +29,9 @@ void task3 (void) {
             usart2_send_string("User input : ");
             usart2_send_string(message);
             usart2_send_string("\n");
+#ifdef FAULT_TEST
+            fault_test_run(message);
+#endif
         }
         task_delay(200);
         report_alive_iwdg(ID_TASK3_IWDG);

@@ -11,7 +11,7 @@ BUILD=build
 TARGET=pith
 
 MCU_FLAGS="-mcpu=cortex-m3 -mthumb -mfloat-abi=soft"
-CFLAGS="$MCU_FLAGS -DSTM32F103xB -Iinc -g -O0 -Wall -ffunction-sections -fdata-sections -fno-common -std=gnu11"
+CFLAGS="$MCU_FLAGS -DSTM32F103xB -Iinc -g -O0 -Wall -ffunction-sections -fdata-sections -fno-common -std=gnu11${FAULT_TEST:+ -DFAULT_TEST}"
 ASFLAGS="$MCU_FLAGS -g -x assembler-with-cpp"
 LDFLAGS="$MCU_FLAGS -Tlinker/stm32f103xb.ld -nostartfiles -specs=nano.specs -specs=nosys.specs -Wl,--gc-sections -Wl,-Map=$BUILD/$TARGET.map"
 
@@ -35,11 +35,12 @@ $CC $CFLAGS -c src/system/mutex/mutex.c -o "$BUILD/mutex.o"
 $CC $CFLAGS -c src/system/uart/uart.c -o "$BUILD/uart.o"
 $CC $CFLAGS -c src/system/SafeSystem/IWDG/IWDG.c -o "$BUILD/IWDG.o"
 $CC $CFLAGS -c src/system/SafeSystem/BKP/bkp.c -o "$BUILD/bkp.o"
+$CC $CFLAGS -c src/system/SafeSystem/BKP/fault_test.c -o "$BUILD/fault_test.o"
 $CC $CFLAGS -c startup/system_stm32f1xx.c -o "$BUILD/system_stm32f1xx.o"
 $CC $ASFLAGS -c startup/startup_stm32f103xb.s -o "$BUILD/startup_stm32f103xb.o"
 
 $CC $LDFLAGS -o "$BUILD/$TARGET.elf" \
-    "$BUILD/main.o" "$BUILD/syscalls.o" "$BUILD/clock_setting.o" "$BUILD/afio_setting.o" "$BUILD/systick.o" "$BUILD/task.o" "$BUILD/task_func.o" "$BUILD/exception_handler.o" "$BUILD/rr.o" "$BUILD/mutex.o" "$BUILD/uart.o" "$BUILD/IWDG.o" "$BUILD/bkp.o" "$BUILD/system_stm32f1xx.o" "$BUILD/startup_stm32f103xb.o"
+    "$BUILD/main.o" "$BUILD/syscalls.o" "$BUILD/clock_setting.o" "$BUILD/afio_setting.o" "$BUILD/systick.o" "$BUILD/task.o" "$BUILD/task_func.o" "$BUILD/exception_handler.o" "$BUILD/rr.o" "$BUILD/mutex.o" "$BUILD/uart.o" "$BUILD/IWDG.o" "$BUILD/bkp.o" "$BUILD/fault_test.o" "$BUILD/system_stm32f1xx.o" "$BUILD/startup_stm32f103xb.o"
 
 $OBJCOPY -O binary "$BUILD/$TARGET.elf" "$BUILD/$TARGET.bin"
 

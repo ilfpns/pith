@@ -22,13 +22,17 @@ MCU_FLAGS = -mcpu=cortex-m3 -mthumb -mfloat-abi=soft
 CFLAGS  = $(MCU_FLAGS) -DSTM32F103xB -Iinc -g -O0 -Wall \
           -ffunction-sections -fdata-sections -fno-common -std=gnu11
 
+ifdef FAULT_TEST
+CFLAGS += -DFAULT_TEST
+endif
+
 ASFLAGS = $(MCU_FLAGS) -g -x assembler-with-cpp
 
 LDFLAGS = $(MCU_FLAGS) -Tlinker/stm32f103xb.ld -nostartfiles \
           -specs=nano.specs -specs=nosys.specs \
           -Wl,--gc-sections -Wl,-Map=$(BUILD)/$(TARGET).map
 
-SRCS_C  = src/main/main.c src/main/syscalls.c src/clock/clock_setting.c src/gpio/afio_setting.c src/system/systick/systick.c src/system/task/task.c src/system/task/task_func.c src/system/handler/exception_handler.c src/system/scheduler/rr.c src/system/mutex/mutex.c src/system/uart/uart.c src/system/SafeSystem/IWDG/IWDG.c src/system/SafeSystem/BKP/bkp.c startup/system_stm32f1xx.c
+SRCS_C  = src/main/main.c src/main/syscalls.c src/clock/clock_setting.c src/gpio/afio_setting.c src/system/systick/systick.c src/system/task/task.c src/system/task/task_func.c src/system/handler/exception_handler.c src/system/scheduler/rr.c src/system/mutex/mutex.c src/system/uart/uart.c src/system/SafeSystem/IWDG/IWDG.c src/system/SafeSystem/BKP/bkp.c src/system/SafeSystem/BKP/fault_test.c startup/system_stm32f1xx.c
 SRCS_S  = startup/startup_stm32f103xb.s
 
 OBJS    = $(SRCS_C:%.c=$(BUILD)/%.o) $(SRCS_S:%.s=$(BUILD)/%.o)
