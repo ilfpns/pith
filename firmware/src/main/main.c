@@ -27,8 +27,6 @@ int main(void) {
     }
     RCC->CSR |= RCC_CSR_RMVF;
 
-    init_the_systick();
-
     // init LED
     GPIOA->BSRR = GPIO_BSRR_BR5;
     uint8_t err_state;
@@ -69,6 +67,7 @@ int main(void) {
             // 인터럽트 분석 후 다시 재구동 코드
         }
     }
+    init_the_systick();
     __asm volatile("svc 0");
 
     for (;;) {}

@@ -6,15 +6,16 @@
 void task1 (void) {
     for (;;) {
         GPIOA->BSRR = GPIO_BSRR_BS5;
-        task_delay(200);
+        task_delay(400);
         report_alive_iwdg(ID_TASK1_IWDG);
     }
 }
 
 void task2 (void) {
+    task_delay(200);
     for (;;) {
         GPIOA->BSRR = GPIO_BSRR_BR5;
-        task_delay(200);
+        task_delay(400);
         report_alive_iwdg(ID_TASK2_IWDG);
     }
 }
@@ -24,6 +25,7 @@ void task3 (void) {
 
     for (;;) {
         if (usart2_receive_string(message, sizeof(message))) {
+            usart2_send_string("User input : ");
             usart2_send_string(message);
             usart2_send_string("\n");
         }

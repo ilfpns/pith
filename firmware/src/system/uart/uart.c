@@ -20,8 +20,15 @@ void set_the_usart2() {
 }
 
 void usart2_send_char(char message) {
+    static char prev;
+
+    if (message == '\n' && prev != '\r') {
+        while (!(USART2->SR & USART_SR_TXE)) { }
+        USART2->DR = '\r';
+    }
     while (!(USART2->SR & USART_SR_TXE)) { }
     USART2->DR = message;
+    prev = message;
     return;
 }
 
@@ -38,7 +45,6 @@ void USART2_IRQHandler(void) {
 
     if (status & (USART_SR_RXNE | USART_SR_ORE)) {
         uint8_t data = (uint8_t)USART2->DR;
-        usart2_send_char(data); /* DEBUG-RX */
         uint32_t next = (rx_head + 1U) & UART_RX_RING_MASK;
 
         if (next != rx_tail) {
