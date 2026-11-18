@@ -23,6 +23,9 @@ uint8_t init_iwdg(void) {
     IWDG->RLR = RELOAD_IWDG;
 
     DBGMCU->CR |= DBGMCU_CR_DBG_IWDG_STOP;
+#ifdef DEBUG_BUILD
+    DBGMCU->CR |= DBGMCU_CR_DBG_SLEEP;
+#endif
 
     uint32_t timeout = TIMEOUT_COUNT_IWDG;
     while (IWDG->SR != 0) {

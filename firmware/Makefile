@@ -26,6 +26,10 @@ ifdef FAULT_TEST
 CFLAGS += -DFAULT_TEST
 endif
 
+ifdef DEBUG_BUILD
+CFLAGS += -DDEBUG_BUILD
+endif
+
 ASFLAGS = $(MCU_FLAGS) -g -x assembler-with-cpp
 
 LDFLAGS = $(MCU_FLAGS) -Tlinker/stm32f103xb.ld -nostartfiles \

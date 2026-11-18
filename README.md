@@ -7,11 +7,11 @@ Zero to one Nucleo — HAL 없이 레지스터부터 만드는 STM32 베어메�
 - **태스크 관리**: TCB 풀(최대 10개) 기반 태스크 생성/관리, `task_delay`로 voluntary blocking, 스택 오버플로 캐너리(canary)로 태스크별 스택 보호. 태스크 생성 실패 시 TCB 롤백
 - **Idle 태스크**: 우선순위 0의 `__WFI()` 루프. 모든 태스크가 대기 중이어도 스케줄러가 항상 실행할 태스크를 확보
 - **GPIO/EXTI**: 버튼 인터럽트(EXTI15_10)로 UART 로그 트리거
-- **UART**: USART2 register-level 드라이버. TX는 폴링 방식(`usart2_send_char`/`usart2_send_string`)이며 `\n`은 `\r\n`으로 변환해 전송, RX는 RXNE 인터럽트 + 256 B 링 버퍼, 줄 단위 조립(`usart2_receive_string`). 수신한 줄은 `User input : ...`으로 되돌려 출력
-- **동기화**: PRIMASK(IRQ masking) 기반 spinlock mutex(`mutex_lock`/`mutex_unlock`)로 태스크·ISR이 공유하는 UART 송신 자원을 보호
+- **UART**: USART2 register-level 드라이버. TX는 256 B 링 버퍼 + TXE 인터럽트 방식(`usart2_send_char`/`usart2_send_string`)이라 호출 측이 전송 완료를 기다리지 않고, `\n`은 `\r\n`으로 변환해 큐에 넣는다. 링이 가득 차면 태스크는 비워질 때까지 기다리고 인터럽트 마스크 상태에서는 문자를 버린다. 리셋·정지 직전에는 `usart2_flush()`로 큐와 마지막 바이트 전송을 기다린다. RX는 RXNE 인터럽트 + 256 B 링 버퍼, 줄 단위 조립(`usart2_receive_string`). 수신한 줄은 `User input : ...`으로 되돌려 출력
+- **동기화**: PRIMASK(IRQ masking) 기반 spinlock mutex(`mutex_lock`/`mutex_unlock`). 버튼 ISR이 쓰는 mutex는 태스크 컨텍스트에서 잡는 동안 해당 IRQ(`MUTEX_INIT_IRQ`)를 마스크해, 락을 쥔 태스크를 ISR이 선점해 스핀하는 데드락을 막는다
 - **Watchdog**: IWDG(약 1 s). IWDG를 시작한 뒤 PR/RLR을 설정하고 kick하는 순서로 초기화. 태스크별 alive 보고 후 supervisor가 모든 태스크가 500 ms 이내에 응답했을 때만 kick. 부팅 시 `RCC->CSR`로 IWDG 리셋 원인 확인
 - **HardFault 대응**: `HardFault_Handler`가 폴트 시점의 PC / LR / CFSR / `Os_Ticks` / 태스크 번호를 BKP 레지스터(DR1~DR10)에 저장하고 리셋, 다음 부팅의 `fault_report()`가 UART로 출력 후 지움. 보드에서 폴트 주입 테스트로 검증함(아래 "폴트 주입 테스트")
-- **부팅 가드**: 태스크 생성에 실패하면 `NVIC_SystemReset()`으로 재시작
+- **부팅 가드**: 태스크 생성에 실패하면(같은 malloc 실패가 리셋 후에도 반복되므로) 메시지를 flush한 뒤 정지
 
 #### 구조
 **① 부팅 초기화** — `main()`이 클럭, USART2, GPIO, EXTI, BKP를 차례로 초기화한다.
@@ -39,6 +39,7 @@ Zero to one Nucleo — HAL 없이 레지스터부터 만드는 STM32 베어메�
 cd firmware
 make          # build/pith.bin 생성
 make flash    # ST-Link 드라이브(NOD_*)로 복사
+make DEBUG_BUILD=1   # 디버깅용 빌드 (sleep 중에도 SWD 접속 가능, DBGMCU DBG_SLEEP 설정)
 ```
 macOS/Linux는 `run.sh`로도 빌드할 수 있다. macOS에서 `cp`가 xattr 오류를 내면 `cp -X`로 복사한다.
 
